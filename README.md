@@ -1,14 +1,13 @@
-<!-- Remove the following content when using this template for create repo for project! -->
-This repository serves as a template for all my future project repositories. It contains the common structure, configurations, and files that I use across my projects. The purpose of this repository template is to maintain consistency and standardization across my projects. By using this template, I ensure that all my repositories follow a similar structure and setup, making it easier to manage and maintain them.
-
-While this template is primarily for personal use, contributions and suggestions for improvements are always welcome. If you have ideas for enhancing the template or making it more useful, feel free to submit a pull request or open an issue.
-<!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXS -->
-
-# Project Title
+# Hotel Reservation System
 
 ## Description
 
+This is a hotel reservation management system. Hotel customers can use the system to fill in the guest information and based on that the system can suggest the number of room/s the customer should take. Subsequently the customer can go ahead and book room/s as per the choice. The application also has an admin dashboard which shows all the information, such as how many rooms are book, list of the guest staying in the hotel etc. The admin dashboard has the authority to make/stash any booking.
+
 ## Tech Stack
+
+JavaFx
+
 ## How it looks
 ## Features
 ## How to run the project
