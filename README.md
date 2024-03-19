@@ -6,7 +6,7 @@ This is a hotel reservation management system. Hotel customers can use the syste
 
 ## Tech Stack
 
-JavaFx
+<img src="https://skillicons.dev/icons?i=java" />
 
 ## How it looks
 ## Features
