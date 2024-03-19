@@ -4,21 +4,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
-public class ViewController {
+public class BookRoomController {
 
     @FXML
     private BorderPane root;
 
     @FXML
     public void initialize() {
-        
     }
 
     @FXML
-    private void handleBookRoomButtonClick() {
+    private void handleGoBackButtonClick() {
         try {
-            BorderPane bookRoomPane = FXMLLoader.load(getClass().getResource("BookRoom.fxml"));
-            root.setCenter(bookRoomPane);
+            BorderPane WelcomePane = FXMLLoader.load(getClass().getResource("Welcome.fxml"));
+            root.setCenter(WelcomePane);
         } catch (Exception e) {
             e.printStackTrace();
         }
