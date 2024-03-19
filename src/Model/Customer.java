@@ -9,7 +9,18 @@ public class Customer {
 	private String firstName,
 				   lastName,
 				   address,
-				   email;
-	private long   phone;
+				   email,
+				   phone;
+	
+	public Customer(String _firstName, String _lastName, String _address, String _email, String _phone, int _totalGuests) {
+		
+		this.totalGuests = _totalGuests;
+		this.firstName 	 = _firstName;
+		this.lastName 	 = _lastName;
+		this.address 	 = _address;
+		this.email 		 = _email;
+		this.phone 		 = _phone;
+		
+	}
 	
 }

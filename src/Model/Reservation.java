@@ -13,4 +13,11 @@ public class Reservation {
 	private Date 	 checkIn,
 					 checkOut;
 	
+	public Reservation(Customer _customer, Room _room, Date _checkIn, Date _checkOut) {
+		this.customer = _customer;
+		this.room 	  = _room;
+		this.checkIn  = _checkIn;
+		this.checkOut = _checkOut;
+	}
+	
 }
