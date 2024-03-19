@@ -6,16 +6,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
-
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			// Create a BorderPane and load the fxml file.
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("View.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("welcome.fxml"));
 			
 			// Create a scene, load the BorderPane, and set the application dimensions.
-			Scene scene = new Scene(root,1200,700);
+			Scene scene = new Scene(root,1172,735.2);
 			
 			// Set the scene on the stage.
 			primaryStage.setScene(scene);
