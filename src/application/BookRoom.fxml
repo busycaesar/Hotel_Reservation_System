@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ViewController">
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BookRoomController">
    <center>
       <BorderPane prefHeight="735.0" prefWidth="1172.0" BorderPane.alignment="CENTER">
          <top>
@@ -26,76 +26,81 @@
          <center>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFEA;" BorderPane.alignment="CENTER">
                <children>
-                  <Text layoutX="47.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book a room:">
+                  <Text layoutX="48.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book a room:">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Text layoutX="250.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
+                  <Text layoutX="251.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="250.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
+                  <Text layoutX="251.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="357.0" layoutY="151.0" prefHeight="35.0" prefWidth="158.0" />
-                  <TextField layoutX="357.0" layoutY="211.0" prefHeight="35.0" prefWidth="158.0" />
-                  <Text layoutX="250.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+                  <TextField layoutX="358.0" layoutY="174.0" prefHeight="35.0" prefWidth="158.0" />
+                  <TextField layoutX="358.0" layoutY="234.0" prefHeight="35.0" prefWidth="158.0" />
+                  <Text layoutX="251.0" layoutY="319.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="357.0" layoutY="272.0" prefHeight="35.0" prefWidth="158.0" />
-                  <Text layoutX="656.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+                  <TextField layoutX="358.0" layoutY="295.0" prefHeight="35.0" prefWidth="158.0" />
+                  <Text layoutX="657.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="763.0" layoutY="149.0" prefHeight="35.0" prefWidth="158.0" />
-                  <Text layoutX="656.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone">
+                  <TextField layoutX="764.0" layoutY="172.0" prefHeight="35.0" prefWidth="158.0" />
+                  <Text layoutX="657.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="763.0" layoutY="209.0" prefHeight="35.0" prefWidth="158.0" />
-                  <Text layoutX="656.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Guest">
+                  <TextField layoutX="764.0" layoutY="232.0" prefHeight="35.0" prefWidth="158.0" />
+                  <Text layoutX="657.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Guest">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <ChoiceBox layoutX="762.0" layoutY="270.0" prefHeight="36.0" prefWidth="160.0" />
-                  <Text layoutX="47.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Details:">
+                  <ChoiceBox layoutX="763.0" layoutY="293.0" prefHeight="36.0" prefWidth="160.0" />
+                  <Text layoutX="48.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Details:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <Text layoutX="47.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Details:">
+                  <Text layoutX="48.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Details:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <Text layoutX="250.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No. of rooms">
+                  <Text layoutX="251.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No. of rooms">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <ChoiceBox layoutX="372.0" layoutY="379.0" prefHeight="36.0" prefWidth="160.0" />
-                  <Text layoutX="250.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check In">
+                  <ChoiceBox layoutX="373.0" layoutY="402.0" prefHeight="36.0" prefWidth="160.0" />
+                  <Text layoutX="251.0" layoutY="489.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check In">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="250.0" layoutY="528.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check Out">
+                  <Text layoutX="251.0" layoutY="551.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check Out">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <DatePicker layoutX="372.0" layoutY="442.0" prefHeight="33.0" prefWidth="161.0" />
-                  <DatePicker layoutX="372.0" layoutY="504.0" prefHeight="33.0" prefWidth="161.0" />
+                  <DatePicker layoutX="373.0" layoutY="465.0" prefHeight="33.0" prefWidth="161.0" />
+                  <DatePicker layoutX="373.0" layoutY="527.0" prefHeight="33.0" prefWidth="161.0" />
                   <Button layoutX="996.0" layoutY="554.0" mnemonicParsing="false" text="Check In">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                <Button onAction="#handleGoBackButtonClick" layoutX="40.0" layoutY="26.0" mnemonicParsing="false" text="Go back">
                      <font>
                         <Font size="16.0" />
                      </font>

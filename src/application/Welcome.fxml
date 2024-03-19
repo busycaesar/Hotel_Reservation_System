@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ViewController">
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.WelcomeController">
    <center>
       <BorderPane prefHeight="735.0" prefWidth="1172.0" BorderPane.alignment="CENTER">
          <top>
@@ -33,7 +33,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button layoutX="598.0" layoutY="361.0" mnemonicParsing="false" text="Login">
+                  <Button onAction="#handleLoginButtonClick" layoutX="598.0" layoutY="361.0" mnemonicParsing="false" text="Login">
                      <font>
                         <Font size="16.0" />
                      </font>
