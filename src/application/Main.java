@@ -11,14 +11,22 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			// Create a BorderPane and load the fxml file.
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("View.fxml"));
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			// Create a scene, load the BorderPane, and set the application dimensions.
+			Scene scene = new Scene(root,1200,700);
+			
+			// Set the scene on the stage.
 			primaryStage.setScene(scene);
+			
+			// Set the property of the stage.
+			primaryStage.setTitle("Hotel Blue Queen");
+			primaryStage.setResizable(false);
+			
+			// Display the stage.
 			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		} catch(Exception e) { e.printStackTrace(); }
 	}
 	
 	public static void main(String[] args) {
