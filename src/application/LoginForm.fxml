@@ -24,13 +24,13 @@
          <center>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFEA;" BorderPane.alignment="CENTER">
                <children>
-                  <Text layoutX="449.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Id">
+                  <Text layoutX="449.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Id*">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                   <TextField fx:id="employeeId" layoutX="565.0" layoutY="247.0" prefHeight="35.0" prefWidth="158.0" />
-                  <Text layoutX="449.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                  <Text layoutX="449.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password*">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -41,16 +41,21 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <Button onAction="#handleLoginButtonClick" layoutX="555.0" layoutY="383.0" mnemonicParsing="false" text="Login">
+                  <Button layoutX="534.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="Login">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button onAction="#handleGoBackButtonClick" layoutX="40.0" layoutY="26.0" mnemonicParsing="false" text="Go back">
+                  <Button layoutX="40.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleGoBackButtonClick" text="Go back">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
+                  <Text fx:id="warning" fill="RED" layoutX="468.0" layoutY="379.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
                </children>
             </Pane>
          </center>
