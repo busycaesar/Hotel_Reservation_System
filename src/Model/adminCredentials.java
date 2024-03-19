@@ -1,6 +1,6 @@
 package Model;
 
-public class adminCredentials {
+public class AdminCredentials {
 
 	private long   id = 1234;
 	private String password = "admin";
