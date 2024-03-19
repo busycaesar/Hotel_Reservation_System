@@ -17,8 +17,11 @@ public class WelcomeController {
     @FXML
     private void handleBookRoomButtonClick() {
         try {
+        	
+        	// Redirect the user to BookRoom page.
             BorderPane bookRoomPane = FXMLLoader.load(getClass().getResource("BookRoom.fxml"));
             root.setCenter(bookRoomPane);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,8 +30,11 @@ public class WelcomeController {
     @FXML
     private void handleLoginButtonClick() {
         try {
+        	
+        	// Redirect the user to LoginForm page.
             BorderPane bookRoomPane = FXMLLoader.load(getClass().getResource("LoginForm.fxml"));
             root.setCenter(bookRoomPane);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

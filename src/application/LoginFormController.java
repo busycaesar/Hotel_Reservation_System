@@ -30,6 +30,7 @@ public class LoginFormController {
         
     }
     
+    // Set default values.
     private void setDefaults() {
     	this.employeeId.setText("");
     	this.password.setText("");
@@ -46,21 +47,31 @@ public class LoginFormController {
         }
     }
     
+    // Redirect the user to admin panel.
     @FXML
     private void handleLoginButtonClick() {
         try {
+        	
+        	// Get the credentials entered by the user.
         	String _receivedEmployeeId = this.employeeId.getText(),
         			_receivedPassword = this.password.getText();
         	
+        	// Make sure credentials are correct.
         	if (!_receivedEmployeeId.equals(this.adminId) || !_receivedPassword.equals(this.adminPassword)) {
+        		
         		System.out.println(_receivedEmployeeId + ", tried logging into the system with wrong credentials!");
+        		
         		this.setDefaults();
+        		
+        		// Display warning in case of incorrect credentials.
         		this.warning.setText("Incorrect Id/Password");
+        		
         		return;
         	}
 
         	System.out.println("Login Successful by " + this.adminId);
         	
+        	// Redirect the user to admin panel.
             BorderPane AdminPanelPane = FXMLLoader.load(getClass().getResource("AdminPanel.fxml"));
             root.setCenter(AdminPanelPane);
         

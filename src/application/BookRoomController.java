@@ -16,6 +16,8 @@ public class BookRoomController {
     @FXML
     private void handleGoBackButtonClick() {
         try {
+        	
+        	// Redirect the user to landing page.
             BorderPane WelcomePane = FXMLLoader.load(getClass().getResource("Welcome.fxml"));
             root.setCenter(WelcomePane);
         } catch (Exception e) {
