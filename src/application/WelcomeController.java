@@ -19,7 +19,7 @@ public class WelcomeController {
         try {
         	
         	// Redirect the user to BookRoom page.
-            BorderPane bookRoomPane = FXMLLoader.load(getClass().getResource("BookRoom.fxml"));
+            BorderPane bookRoomPane = FXMLLoader.load(getClass().getResource("RoomSuggestion.fxml"));
             root.setCenter(bookRoomPane);
             
         } catch (Exception e) {

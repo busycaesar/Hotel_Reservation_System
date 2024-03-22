@@ -2,6 +2,7 @@ package application;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 
 public class BookRoomController {
@@ -11,6 +12,10 @@ public class BookRoomController {
 
     @FXML
     public void initialize() {
+    	this.setDefault();
+    }
+    
+    private void setDefault() {
     }
 
     @FXML
