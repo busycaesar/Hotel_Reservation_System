@@ -29,12 +29,12 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Text layoutX="540.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Guest">
+                  <Text layoutX="525.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Guest">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Button layoutX="526.0" layoutY="307.0" mnemonicParsing="false" text="Get suggestions">
+                  <Button layoutX="502.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleGetSuggestionsButtonClick" text="Get suggestions">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -44,19 +44,30 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Text layoutX="529.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adults">
+                  <Text layoutX="514.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adults*">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="532.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kids">
+                  <Text layoutX="517.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kids">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="594.0" layoutY="201.0" prefHeight="34.0" prefWidth="48.0" />
-                  <TextField layoutX="594.0" layoutY="254.0" prefHeight="34.0" prefWidth="48.0" />
-                  <Text layoutX="441.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
+                  <TextField fx:id="totalAdults" layoutX="579.0" layoutY="202.0" prefHeight="34.0" prefWidth="48.0" />
+                  <TextField fx:id="totalKids" layoutX="579.0" layoutY="255.0" prefHeight="34.0" prefWidth="48.0" />
+                  <Text layoutX="426.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
+                  <Text fx:id="displaySuggestions" layoutX="550.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="87.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="displayWarning" fill="RED" layoutX="217.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="710.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="478.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fields marked with '*' are required." />
                </children>
             </Pane>
          </center>
