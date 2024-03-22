@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class BookRoomController {
@@ -12,7 +13,7 @@ public class BookRoomController {
     @FXML
     private BorderPane root;
     @FXML
-    private Text displaySuggestions, displayWarning;
+    private Text displaySuggestions, displayWarning, maxGuestsAllowed, requiredFields;
     @FXML
     private TextField totalAdults, totalKids;
     private int TOTAL_GUESTS = 10;
@@ -23,6 +24,8 @@ public class BookRoomController {
     }
     
     private void setDefault() {
+    	this.maxGuestsAllowed.setFill(Color.BLACK);
+    	this.requiredFields.setFill(Color.BLACK);
     	this.displayWarning.setText("");
     	this.displaySuggestions.setText("");
     }
@@ -48,7 +51,7 @@ public class BookRoomController {
         try {
         	
         	if(adultsText.isEmpty()) {
-        		this.displayWarning.setText("Please fill all the required fields."); 
+        		this.requiredFields.setFill(Color.RED);
         		return false;
         	}
         	
@@ -65,7 +68,7 @@ public class BookRoomController {
             
             if(_totalAdults + _totalKids > TOTAL_GUESTS) {
             	System.out.println("Tried to store more than allowed guests.");
-            	this.displayWarning.setText("Single customer cannot book rooms for more than "+ TOTAL_GUESTS +" guests.");
+            	this.maxGuestsAllowed.setFill(Color.RED);
             	return false;
             }
             

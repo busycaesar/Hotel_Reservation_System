@@ -56,7 +56,7 @@
                   </Text>
                   <TextField fx:id="totalAdults" layoutX="579.0" layoutY="202.0" prefHeight="34.0" prefWidth="48.0" />
                   <TextField fx:id="totalKids" layoutX="579.0" layoutY="255.0" prefHeight="34.0" prefWidth="48.0" />
-                  <Text layoutX="426.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
+                  <Text fx:id="maxGuestsAllowed" layoutX="426.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
                   <Text fx:id="displaySuggestions" layoutX="550.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="87.0">
                      <font>
                         <Font size="18.0" />
@@ -67,7 +67,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="478.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fields marked with '*' are required." />
+                  <Text fx:id="requiredFields" layoutX="478.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fields marked with '*' are required." />
                </children>
             </Pane>
          </center>
