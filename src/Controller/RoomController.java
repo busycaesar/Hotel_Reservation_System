@@ -1,40 +1,24 @@
 package Controller;
 
 import Model.Room;
+import Model.Room.RoomType;
 
 public class RoomController {
 	
-	final int SingleRooms = 10,
-			  DoubleRooms = 7,
-			  DeluxRooms  = 5,
-			  PentHouse   = 3;
-
-    private Room[] singleRooms 	  = new Room[SingleRooms],
-    			   doubleRooms 	  = new Room[DoubleRooms],
-    			   deluxRooms 	  = new Room[DeluxRooms],
-    			   pentHouseRooms = new Room[PentHouse];
+	Room 	room;
+	boolean booked;
 	
-	public RoomController() {
-		
-		this.LoadRoomData();
-		
+	public RoomController(String _id, int _maxGuestAllowed, double _costPerDay, RoomType _roomType) {
+		this.room 	= new Room(_id, _maxGuestAllowed, _costPerDay, _roomType);
+		this.booked = false;
 	}
 	
-	private void LoadRoomData() {
-
-		this.addRoomsIntoGroup(this.singleRooms, "10", 1, 30, Room.RoomType.SINGLE);
-		this.addRoomsIntoGroup(this.doubleRooms, "20", 2, 50, Room.RoomType.DOUBLE);
-		this.addRoomsIntoGroup(this.deluxRooms, "30", 4, 120, Room.RoomType.DELUX);
-		this.addRoomsIntoGroup(this.pentHouseRooms, "40", 6, 250, Room.RoomType.PENTHOUSE);
-		
+	public String getType() {
+		return this.room.getType();
 	}
 	
-	private void addRoomsIntoGroup(Room[] roomGroup, String roomIdPrefix, int maxGuestAllowed, double roomPrice, Room.RoomType roomType) {
-		for(int i = 0; i < roomGroup.length; i++) {
-			roomGroup[i] = new Room(roomIdPrefix + i + 1, maxGuestAllowed, roomPrice, roomType);
-		}
+	public double getCost() {
+		return this.room.getCost();
 	}
-	
-	
 	
 }

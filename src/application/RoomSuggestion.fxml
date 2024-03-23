@@ -57,7 +57,7 @@
                   <TextField fx:id="totalAdults" layoutX="579.0" layoutY="202.0" prefHeight="34.0" prefWidth="48.0" />
                   <TextField fx:id="totalKids" layoutX="579.0" layoutY="255.0" prefHeight="34.0" prefWidth="48.0" />
                   <Text fx:id="maxGuestsAllowed" layoutX="426.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
-                  <Text fx:id="displaySuggestions" layoutX="21.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1117.0">
+                  <Text fx:id="displaySuggestions" layoutX="138.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="863.0">
                      <font>
                         <Font size="18.0" />
                      </font>

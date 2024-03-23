@@ -1,5 +1,7 @@
 package application;
 
+import Controller.RoomController;
+import Controller.RoomsAvailable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
@@ -17,9 +19,11 @@ public class BookRoomController {
     @FXML
     private TextField totalAdults, totalKids;
     private int TOTAL_GUESTS = 10;
+    private RoomsAvailable roomsAvailable;
 
     @FXML
     public void initialize() {
+    	roomsAvailable = new RoomsAvailable();
     	this.setDefault();
     }
     
@@ -100,8 +104,27 @@ public class BookRoomController {
     		
     		this.setDefault();
     		
-    		this.displaySuggestions.setText("Suggestions for " + _totalAdults + _totalKids);
+    		this.displayRoomSuggestions(_totalAdults + (int)Math.ceil((double)_totalKids / 2));
     		
+    }
+    
+    private void displayRoomSuggestions(int totalGuests) {
+    	
+    	System.out.println("Suggestions for " + totalGuests);
+    	RoomController[][] roomSuggestions = this.roomsAvailable.getRoomsFor(totalGuests);
+    	
+  	String suggestions = "";
+double estimatedPricePerDay = 0.0;
+    	
+    	for(RoomController[] rooms: roomSuggestions) {
+    		for(RoomController room: rooms) {
+    		suggestions += room.getType()+ ": $" + room.getCost() + "\n";
+    		estimatedPricePerDay += room.getCost();
+    		}
+    	}
+    	
+    	this.displaySuggestions.setText(suggestions + estimatedPricePerDay);
+    	
     }
     
 }
