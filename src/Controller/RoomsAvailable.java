@@ -1,18 +1,16 @@
 package Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Model.Room.RoomType;
 
 public class RoomsAvailable {
-	
-	final int SingleRooms = 10,
-			  DoubleRooms = 7,
-			  DeluxRooms  = 5,
-			  PentHouse   = 3;
 
-    private RoomController[] singleRooms 	= new RoomController[SingleRooms],
-    			   			 doubleRooms 	= new RoomController[DoubleRooms],
-    			   			 deluxRooms 	= new RoomController[DeluxRooms],
-    			   			 pentHouseRooms = new RoomController[PentHouse];
+    private RoomController[] singleRooms 	= new RoomController[RoomDescription.SingleRooms],
+    			   			 doubleRooms 	= new RoomController[RoomDescription.DoubleRooms],
+    			   			 deluxRooms 	= new RoomController[RoomDescription.DeluxRooms],
+    			   			 pentHouseRooms = new RoomController[RoomDescription.PentHouses];
 	
 	public RoomsAvailable() {
 		
@@ -22,10 +20,10 @@ public class RoomsAvailable {
 	
 	private void LoadRoomData() {
 
-		this.addRoomsIntoGroup(this.singleRooms, "10", 1, 30, RoomType.SINGLE);
-		this.addRoomsIntoGroup(this.doubleRooms, "20", 2, 50, RoomType.DOUBLE);
-		this.addRoomsIntoGroup(this.deluxRooms, "30", 4, 120, RoomType.DELUX);
-		this.addRoomsIntoGroup(this.pentHouseRooms, "40", 6, 250, RoomType.PENTHOUSE);
+		this.addRoomsIntoGroup(this.singleRooms, RoomDescription.PrefixSingleRoomId, RoomDescription.MaxGuestAllowedSingleRoom, RoomDescription.SingleRoomCostPerDay, RoomType.SINGLE);
+		this.addRoomsIntoGroup(this.doubleRooms, RoomDescription.PrefixDoubleRoomId, RoomDescription.MaxGuestAllowedDoubleRoom, RoomDescription.DoubleRoomCostPerDay, RoomType.DOUBLE);
+		this.addRoomsIntoGroup(this.deluxRooms, RoomDescription.PrefixDeluxRoomId, RoomDescription.MaxGuestAllowedDeluxRoom, RoomDescription.DeluxRoomCostPerDay, RoomType.DELUX);
+		this.addRoomsIntoGroup(this.pentHouseRooms, RoomDescription.PrefixPentHouseId, RoomDescription.MaxGuestAllowedPentHouse, RoomDescription.PentHouseCostPerDay, RoomType.PENTHOUSE);
 		
 	}
 	
@@ -42,14 +40,14 @@ public class RoomsAvailable {
 
 		while(totalGuests != 0) {
 			
-			if(totalGuests >= 6) {
+			if(totalGuests >= RoomDescription.MaxGuestAllowedPentHouse) {
 				
-				roomsRequire = Math.round(totalGuests / 6);
-				for(int i = 0; i < this.PentHouse; i++) {
+				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedPentHouse);
+				for(int i = 0; i < RoomDescription.PentHouses; i++) {
 					if(!this.pentHouseRooms[i].booked) roomsAvailable++;
 				}
 				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= 6;
+					totalGuests -= RoomDescription.MaxGuestAllowedPentHouse;
 					roomsSuggestions[index] = new RoomController[roomsRequire];
 					for(int i = 0; i < roomsRequire; i++) {
 						roomsSuggestions[index][i] = this.pentHouseRooms[i];
@@ -57,9 +55,9 @@ public class RoomsAvailable {
 					index++;
 				}
 			}
-			else if(totalGuests >= 4) {
-				roomsRequire = Math.round(totalGuests / 4);
-				for(int i = 0; i < this.DeluxRooms; i++) {
+			else if(totalGuests >= RoomDescription.MaxGuestAllowedDeluxRoom) {
+				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDeluxRoom);
+				for(int i = 0; i < RoomDescription.DeluxRooms; i++) {
 					if(!this.deluxRooms[i].booked) roomsAvailable++;
 				}
 				if(roomsAvailable >= roomsRequire) {
@@ -71,13 +69,13 @@ public class RoomsAvailable {
 					index++;
 				}
 			}
-			else if(totalGuests >= 2) {
-				roomsRequire = Math.round(totalGuests / 2);
-				for(int i = 0; i < this.DoubleRooms; i++) {
+			else if(totalGuests >= RoomDescription.MaxGuestAllowedDoubleRoom) {
+				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDoubleRoom);
+				for(int i = 0; i < RoomDescription.DoubleRooms; i++) {
 					if(!this.doubleRooms[i].booked) roomsAvailable++;
 				}
 				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= 2;
+					totalGuests -= RoomDescription.MaxGuestAllowedDoubleRoom;
 					roomsSuggestions[index] = new RoomController[roomsRequire];
 					for(int i = 0; i < roomsRequire; i++) {
 						roomsSuggestions[index][i] = this.doubleRooms[i];
@@ -87,7 +85,7 @@ public class RoomsAvailable {
 			}
 			else{
 				roomsRequire = totalGuests;
-				for(int i = 0; i < this.SingleRooms; i++) {
+				for(int i = 0; i < RoomDescription.SingleRooms; i++) {
 					if(!this.singleRooms[i].booked) roomsAvailable++;
 				}
 				if(roomsAvailable >= roomsRequire) {

@@ -1,6 +1,9 @@
 package application;
 
+import java.util.List;
+
 import Controller.RoomController;
+import Controller.RoomGroupLinkedList;
 import Controller.RoomsAvailable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,8 +116,8 @@ public class BookRoomController {
     	System.out.println("Suggestions for " + totalGuests);
     	RoomController[][] roomSuggestions = this.roomsAvailable.getRoomsFor(totalGuests);
     	
-  	String suggestions = "";
-double estimatedPricePerDay = 0.0;
+    	String suggestions = "";
+    	double estimatedPricePerDay = 0.0;
     	
     	for(RoomController[] rooms: roomSuggestions) {
     		for(RoomController room: rooms) {

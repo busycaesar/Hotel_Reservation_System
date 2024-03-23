@@ -21,6 +21,10 @@ public class Room {
 		this.roomType = _roomType;
 	}
 	
+	public int getMaxAllowedGuests() {
+		return this.maxGuestAllowed;
+	}
+	
 	public String getType() {
 		return this.roomType.toString();
 	}

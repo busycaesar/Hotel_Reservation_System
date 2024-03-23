@@ -13,6 +13,10 @@ public class RoomController {
 		this.booked = false;
 	}
 	
+	public int getMaxAllowedGuests() {
+		return this.room.getMaxAllowedGuests();
+	}
+	
 	public String getType() {
 		return this.room.getType();
 	}
