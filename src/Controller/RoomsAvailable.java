@@ -7,10 +7,10 @@ import Model.Room.RoomType;
 
 public class RoomsAvailable {
 
-    private RoomController[] singleRooms 	= new RoomController[RoomDescription.SingleRooms],
-    			   			 doubleRooms 	= new RoomController[RoomDescription.DoubleRooms],
-    			   			 deluxRooms 	= new RoomController[RoomDescription.DeluxRooms],
-    			   			 pentHouseRooms = new RoomController[RoomDescription.PentHouses];
+	private ArrayList<RoomController> singleRooms 	 = new ArrayList<>(),
+    			   			 		  doubleRooms 	 = new ArrayList<>(),
+    			   			 		  deluxRooms 	 = new ArrayList<>(),
+    			   			 		  pentHouseRooms = new ArrayList<>();
 	
 	public RoomsAvailable() {
 		
@@ -20,94 +20,138 @@ public class RoomsAvailable {
 	
 	private void LoadRoomData() {
 
-		this.addRoomsIntoGroup(this.singleRooms, RoomDescription.PrefixSingleRoomId, RoomDescription.MaxGuestAllowedSingleRoom, RoomDescription.SingleRoomCostPerDay, RoomType.SINGLE);
-		this.addRoomsIntoGroup(this.doubleRooms, RoomDescription.PrefixDoubleRoomId, RoomDescription.MaxGuestAllowedDoubleRoom, RoomDescription.DoubleRoomCostPerDay, RoomType.DOUBLE);
-		this.addRoomsIntoGroup(this.deluxRooms, RoomDescription.PrefixDeluxRoomId, RoomDescription.MaxGuestAllowedDeluxRoom, RoomDescription.DeluxRoomCostPerDay, RoomType.DELUX);
-		this.addRoomsIntoGroup(this.pentHouseRooms, RoomDescription.PrefixPentHouseId, RoomDescription.MaxGuestAllowedPentHouse, RoomDescription.PentHouseCostPerDay, RoomType.PENTHOUSE);
+		this.addRoomsIntoGroup(this.singleRooms, 
+							   RoomDescription.SingleRooms,
+							   RoomDescription.PrefixSingleRoomId,
+							   RoomDescription.MaxGuestAllowedSingleRoom,
+							   RoomDescription.SingleRoomCostPerDay, 
+							   RoomType.SINGLE);
+		
+		this.addRoomsIntoGroup(this.doubleRooms,
+							   RoomDescription.DoubleRooms, 
+							   RoomDescription.PrefixDoubleRoomId, 
+							   RoomDescription.MaxGuestAllowedDoubleRoom,
+							   RoomDescription.DoubleRoomCostPerDay, 
+							   RoomType.DOUBLE);
+		
+		this.addRoomsIntoGroup(this.deluxRooms, 
+							   RoomDescription.DeluxRooms, 
+							   RoomDescription.PrefixDeluxRoomId, 
+							   RoomDescription.MaxGuestAllowedDeluxRoom, 
+							   RoomDescription.DeluxRoomCostPerDay, 
+							   RoomType.DELUX);
+		
+		this.addRoomsIntoGroup(this.pentHouseRooms, 
+							   RoomDescription.PentHouses, 
+							   RoomDescription.PrefixPentHouseId, 
+							   RoomDescription.MaxGuestAllowedPentHouse, 
+							   RoomDescription.PentHouseCostPerDay, 
+							   RoomType.PENTHOUSE);
 		
 	}
 	
-	private void addRoomsIntoGroup(RoomController[] roomGroup, String roomIdPrefix, int maxGuestAllowed, double roomPrice, RoomType roomType) {
-		for(int i = 0; i < roomGroup.length; i++) {
-			roomGroup[i] = new RoomController(roomIdPrefix + i + 1, maxGuestAllowed, roomPrice, roomType);
+	private void addRoomsIntoGroup(ArrayList<RoomController> roomGroup, int totalRoomsAvailable, 
+								   String roomIdPrefix, int maxGuestAllowed, 
+								   double roomPrice, RoomType roomType) {
+		
+		for(int i = 0; i < totalRoomsAvailable; i++) {
+			RoomController room = 
+					new RoomController(roomIdPrefix + i + 1, maxGuestAllowed, roomPrice, roomType);
+			roomGroup.add(room);
 		}
 	}
 	
-	public RoomController[][] getRoomsFor(int totalGuests) {
+	/*
+	private RoomController [] temp(int totalGuests, ArrayList<RoomController> teemp) {
+		RoomController [] some = null;
+		int roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDeluxRoom),
+				roomsAvailable = 0;
+		
+		for(RoomController room: teemp) {
+			if(!room.booked) roomsAvailable++;
+		}
 
-		int roomsRequire = 0, roomsAvailable = 0, index = 0;
-		RoomController[][] roomsSuggestions = new RoomController[4][];
+		if(roomsAvailable >= roomsRequire) {
+			some = new RoomController[roomsRequire];
+			for(int i = 0; i < roomsRequire; i++) {
+				some[i] = teemp.get(i);
+			}
+			return some;
+		}
+		return some;
+	}
+	
+	public ArrayList<RoomController []> getRoomsFor(int totalGuests) {
 
+		int roomsRequire = 0, roomsAvailable = 0;
+		ArrayList<RoomController []> roomsSuggestions = new ArrayList<>();
+		
 		while(totalGuests != 0) {
 			
 			if(totalGuests >= RoomDescription.MaxGuestAllowedPentHouse) {
 				
-				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedPentHouse);
-				for(int i = 0; i < RoomDescription.PentHouses; i++) {
-					if(!this.pentHouseRooms[i].booked) roomsAvailable++;
+				RoomController[] rooms = this.temp(totalGuests, this.pentHouseRooms);
+				
+				if(rooms != null) {
+					totalGuests -= rooms.length;
+					roomsSuggestions.add(rooms);
 				}
-				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= RoomDescription.MaxGuestAllowedPentHouse;
-					roomsSuggestions[index] = new RoomController[roomsRequire];
-					for(int i = 0; i < roomsRequire; i++) {
-						roomsSuggestions[index][i] = this.pentHouseRooms[i];
-					}
-					index++;
-				}
+
 			}
 			else if(totalGuests >= RoomDescription.MaxGuestAllowedDeluxRoom) {
+				
 				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDeluxRoom);
-				for(int i = 0; i < RoomDescription.DeluxRooms; i++) {
-					if(!this.deluxRooms[i].booked) roomsAvailable++;
+				
+				for(RoomController room: this.deluxRooms) {
+					if(!room.booked) roomsAvailable++;
 				}
+
 				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= 4;
-					roomsSuggestions[index] = new RoomController[roomsRequire];
+					totalGuests -= RoomDescription.MaxGuestAllowedDeluxRoom;
+					RoomController[] rooms = new RoomController[roomsRequire];
 					for(int i = 0; i < roomsRequire; i++) {
-						roomsSuggestions[index][i] = this.deluxRooms[i];
+						rooms[i] = this.deluxRooms.get(i);
 					}
-					index++;
+					roomsSuggestions.add(rooms);
 				}
 			}
 			else if(totalGuests >= RoomDescription.MaxGuestAllowedDoubleRoom) {
 				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDoubleRoom);
-				for(int i = 0; i < RoomDescription.DoubleRooms; i++) {
-					if(!this.doubleRooms[i].booked) roomsAvailable++;
+
+				for(RoomController room: this.doubleRooms) {
+					if(!room.booked) roomsAvailable++;
 				}
+				
 				if(roomsAvailable >= roomsRequire) {
 					totalGuests -= RoomDescription.MaxGuestAllowedDoubleRoom;
-					roomsSuggestions[index] = new RoomController[roomsRequire];
+					RoomController[] rooms = new RoomController[roomsRequire];
 					for(int i = 0; i < roomsRequire; i++) {
-						roomsSuggestions[index][i] = this.doubleRooms[i];
+						rooms[i] = this.doubleRooms.get(i);
 					}
-					index++;
+					roomsSuggestions.add(rooms);
 				}
 			}
 			else{
 				roomsRequire = totalGuests;
-				for(int i = 0; i < RoomDescription.SingleRooms; i++) {
-					if(!this.singleRooms[i].booked) roomsAvailable++;
+
+				for(RoomController room: this.singleRooms) {
+					if(!room.booked) roomsAvailable++;
 				}
+				
 				if(roomsAvailable >= roomsRequire) {
 					totalGuests = 0;
-					roomsSuggestions[index] = new RoomController[roomsRequire];
+					RoomController[] rooms = new RoomController[roomsRequire];
 					for(int i = 0; i < roomsRequire; i++) {
-						roomsSuggestions[index][i] = this.singleRooms[i];
+						rooms[i] = this.singleRooms.get(i);
 					}
-				}
-				index++;
+					roomsSuggestions.add(rooms);
+			}
 			}
 			
 		}
 		
-		RoomController[][] _roomsSuggestions = new RoomController[index][];
+		return roomsSuggestions;
 		
-		for(int i = 0; i < index; i++) {
-			_roomsSuggestions[i] = roomsSuggestions[i];
-		}
-		
-		return _roomsSuggestions;
-		
-	}
+	}*/
 	
 }

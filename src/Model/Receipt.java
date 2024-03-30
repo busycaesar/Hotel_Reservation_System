@@ -2,7 +2,8 @@ package Model;
 
 public class Receipt {
 
+	int id;
 	Reservation reservation;
-	double totalAmount, discount, tax, finalAmount;
+	double netTotalAmount, discount, tax, totalAmount;
 	
 }

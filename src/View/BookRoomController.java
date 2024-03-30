@@ -1,5 +1,6 @@
-package application;
+package View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Controller.RoomController;
@@ -114,7 +115,7 @@ public class BookRoomController {
     private void displayRoomSuggestions(int totalGuests) {
     	
     	System.out.println("Suggestions for " + totalGuests);
-    	RoomController[][] roomSuggestions = this.roomsAvailable.getRoomsFor(totalGuests);
+    	ArrayList<RoomController []> roomSuggestions = this.roomsAvailable.getRoomsFor(totalGuests);
     	
     	String suggestions = "";
     	double estimatedPricePerDay = 0.0;

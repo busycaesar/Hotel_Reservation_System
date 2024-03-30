@@ -1,4 +1,4 @@
-package application;
+package View;
 
 import Controller.AuthenticationController;
 import javafx.fxml.FXML;

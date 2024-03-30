@@ -3,5 +3,5 @@ module hotel_reservation_system {
 	requires javafx.fxml;
 	requires javafx.graphics;
 	
-	opens application to javafx.graphics, javafx.fxml;
+	opens View to javafx.graphics, javafx.fxml;
 }
