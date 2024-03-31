@@ -127,9 +127,9 @@ public class ReservationManager {
 			firstRoom = firstRoom.getNext();
 		}
 		
-		ReservationController reservation = new ReservationController(firstName, lastName, address, email,
-																	  phone, totalGuests, checkIn, checkOut,
-																	  roomsReserved);
+		ReservationController reservation 
+		= new ReservationController(ReservationManager.allReservation.size(), firstName, lastName, 
+									address, email, phone, totalGuests, checkIn, checkOut, roomsReserved);
 		
 		ReservationManager.allReservation.add(reservation);
 		

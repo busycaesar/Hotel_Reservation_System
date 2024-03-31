@@ -14,11 +14,23 @@ public class Reservation {
 	private Date 	 checkIn,
 					 checkOut;
 	
-	public Reservation(Customer _customer, ArrayList<Room> _roomsReserved, Date _checkIn, Date _checkOut) {
+	public Reservation(int _id, Customer _customer, ArrayList<Room> _roomsReserved, Date _checkIn, Date _checkOut) {
 		this.customer = _customer;
 		this.roomsReserved 	  = _roomsReserved;
 		this.checkIn  = _checkIn;
 		this.checkOut = _checkOut;
+	}
+	
+	public Customer getCustomer() {
+		return this.customer;
+	}
+	
+	public Date getCheckIn() {
+		return this.checkIn;
+	}
+	
+	public Date getCheckOut() {
+		return this.checkOut;
 	}
 	
 }

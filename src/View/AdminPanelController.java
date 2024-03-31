@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import Controller.ReservationController;
 import Controller.ReservationManager;
+import UtilityFunction.AlertBox;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class AdminPanelController {
 
@@ -31,9 +36,9 @@ public class AdminPanelController {
     private void handleCurrentBookingsButtonClick() {
         	
     		ArrayList<ReservationController> allReservation = ReservationManager.getAllReservation();
-    		
-    		this.temp.setText(allReservation.size()+" reservation.");
-        //	_FXMLUtil.setScreen(root, "Welcome.fxml");
+
+    	    AlertBox.listView(allReservation, "Current Bookings");
+
     }
     
     @FXML
