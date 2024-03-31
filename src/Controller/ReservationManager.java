@@ -137,8 +137,8 @@ public class ReservationManager {
 
 	}
 	
-	public static int getAllReservation() {
-		return ReservationManager.allReservation.size();
+	public static ArrayList<ReservationController> getAllReservation() {
+		return ReservationManager.allReservation;
 	}
 	
 	/*

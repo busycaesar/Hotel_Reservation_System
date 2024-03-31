@@ -1,5 +1,8 @@
 package View;
 
+import java.util.ArrayList;
+
+import Controller.ReservationController;
 import Controller.ReservationManager;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
@@ -27,9 +30,9 @@ public class AdminPanelController {
     @FXML
     private void handleCurrentBookingsButtonClick() {
         	
-    		//ArrayList<ReservationController> allReservation 
-    		int temp = ReservationManager.getAllReservation();
-    		this.temp.setText(temp+" reservation.");
+    		ArrayList<ReservationController> allReservation = ReservationManager.getAllReservation();
+    		
+    		this.temp.setText(allReservation.size()+" reservation.");
         //	_FXMLUtil.setScreen(root, "Welcome.fxml");
     }
     

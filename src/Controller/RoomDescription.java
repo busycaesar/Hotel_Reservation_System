@@ -7,7 +7,7 @@ public class RoomDescription {
 			  		 DeluxRooms  = 7,
 			  		 PentHouses   = 5;
 	
-	final static int MaxGuestAllowedSingleRoom = 1,
+	public final static int MaxGuestAllowedSingleRoom = 1,
 		      		 MaxGuestAllowedDoubleRoom = 2,
 		      		 MaxGuestAllowedDeluxRoom = 4,
 		      		 MaxGuestAllowedPentHouse = 6;
