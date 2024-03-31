@@ -1,18 +1,13 @@
 package Model;
 
+import Controller.RoomDescription.RoomType;
+
 public class Room {
 
 	private String 	 id;
 	private int	   	 maxGuestAllowed;
 	private double 	 costPerDay;
 	private RoomType roomType; 
-
-	public static enum RoomType {
-		SINGLE,
-		DOUBLE,
-		DELUX,
-		PENTHOUSE
-	}
 	
 	public Room(String _id, int _maxGuestAllowed, double _costPerDay, RoomType _roomType) {
 		this.id = _id;

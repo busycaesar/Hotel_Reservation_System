@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import Model.*;
@@ -7,12 +8,19 @@ import Model.*;
 public class ReservationController {
 
 	private Reservation reservation;
-	
-	public ReservationController(String firstName, String lastName, String address, String email, String phone, int totalGuests, Date checkIn, Date checkOut) {
+	  
+	public ReservationController(String firstName, String lastName, String address, String email, 
+								 String phone, int totalGuests, Date checkIn, Date checkOut, 
+								 ArrayList<RoomController> roomsReserved) {
 		
+		ArrayList<Room> _roomsReserved = new ArrayList<>();
+		
+		for(RoomController room: roomsReserved) {
+			_roomsReserved.add(room.getRoom());
+		}
+ 		
 		Customer customer = new Customer(firstName, lastName, address, email, phone, totalGuests);
-		//Room 	 room 	  = new Room();
-		//this.reservation  = new Reservation(customer, room, checkIn, checkOut);
+		this.reservation  = new Reservation(customer, _roomsReserved, checkIn, checkOut);
 		
 	}
 	

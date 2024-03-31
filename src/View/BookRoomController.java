@@ -1,14 +1,18 @@
 package View;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import Controller.RoomController;
-import Controller.RoomGroupLinkedList;
-import Controller.RoomsAvailable;
+import Controller.RoomDescription;
+import Controller.RoomDescription.RoomType;
+import Controller.RoomLinkedList;
+import Controller.ReservationManager;
+import UtilityFunction.AlertBox;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -16,119 +20,186 @@ import javafx.scene.text.Text;
 
 public class BookRoomController {
 
+	private static boolean isAdmin;
     @FXML
     private BorderPane root;
     @FXML
-    private Text displaySuggestions, displayWarning, maxGuestsAllowed, requiredFields;
+    private ChoiceBox<Integer> totalGuests, singleRooms, doubleRooms, deluxRooms, pentHouseRooms;
     @FXML
-    private TextField totalAdults, totalKids;
-    private int TOTAL_GUESTS = 10;
-    private RoomsAvailable roomsAvailable;
-
+    private DatePicker checkIn, checkOut;
+    @FXML
+    private TextField firstName, lastName, address, email, phone;
+    @FXML
+    private Text requireFieldWarning, warning;
+    
     @FXML
     public void initialize() {
-    	roomsAvailable = new RoomsAvailable();
-    	this.setDefault();
-    }
-    
-    private void setDefault() {
-    	this.maxGuestsAllowed.setFill(Color.BLACK);
-    	this.requiredFields.setFill(Color.BLACK);
-    	this.displayWarning.setText("");
-    	this.displaySuggestions.setText("");
-    }
-
-    @FXML
-    private void handleGoBackButtonClick() {
-        try {
-        	// Redirect the user to landing page.
-            BorderPane WelcomePane = FXMLLoader.load(getClass().getResource("Welcome.fxml"));
-            root.setCenter(WelcomePane);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    /*
-     * Conditions:
-     * 1. Both should be number.
-     * 2. Adults should always be more than 0.
-     * 3. Total guests cannot be more than TOTAL_GUESTS. Single person can book rooms for maximum of TOTAL_GUESTS.
-     */
-    public boolean verifyInputs(String adultsText, String kidsText) {
-        try {
-        	
-        	if(adultsText.isEmpty()) {
-        		this.requiredFields.setFill(Color.RED);
-        		return false;
-        	}
-        	
-            int _totalAdults = Integer.parseInt(adultsText),
-            	_totalKids 	 = 0;
-            
-            if(_totalAdults <= 0) {
-            	System.out.println("Set adults to 0.");
-            	this.displayWarning.setText("Adults cannot be 0."); 
-            	return false;
-            }
-            
-            if(!kidsText.isEmpty()) _totalKids = Integer.parseInt(kidsText);
-            
-            if(_totalAdults + _totalKids > TOTAL_GUESTS) {
-            	System.out.println("Tried to store more than allowed guests.");
-            	this.maxGuestsAllowed.setFill(Color.RED);
-            	return false;
-            }
-            
-            return true;
-        
-        } catch (NumberFormatException e) {
-        	System.out.println("Invalid input for guests.");
-            this.displayWarning.setText("Invalid input!");
-            return false;
-        }
-    }
-
-    
-    @FXML
-    private void handleGetSuggestionsButtonClick() {
-    		
-    		String adultsEntered = this.totalAdults.getText(),
-    			   kidsEntered	 = this.totalKids.getText();
-
-    		this.setDefault();
-    		
-    		if(!this.verifyInputs(adultsEntered, kidsEntered)) return;
-    		
-    		int _totalAdults = Integer.parseInt(adultsEntered), 
-    			_totalKids = 0;
-    		
-    		if(!kidsEntered.isEmpty() && !kidsEntered.equals("0"))
-    			_totalKids = Integer.parseInt(kidsEntered);
-    		
-    		this.setDefault();
-    		
-    		this.displayRoomSuggestions(_totalAdults + (int)Math.ceil((double)_totalKids / 2));
-    		
-    }
-    
-    private void displayRoomSuggestions(int totalGuests) {
     	
-    	System.out.println("Suggestions for " + totalGuests);
-    	ArrayList<RoomController []> roomSuggestions = this.roomsAvailable.getRoomsFor(totalGuests);
+    	this.loadData();
+    	if (!BookRoomController.isAdmin) this.setDefaults();
+
+    }
+    
+    private void loadData() {
     	
-    	String suggestions = "";
-    	double estimatedPricePerDay = 0.0;
-    	
-    	for(RoomController[] rooms: roomSuggestions) {
-    		for(RoomController room: rooms) {
-    		suggestions += room.getType()+ ": $" + room.getCost() + "\n";
-    		estimatedPricePerDay += room.getCost();
-    		}
+    	for(int i = 0; i < RoomDescription.maxGuestPerReservation; i++) {
+    		this.totalGuests.getItems().add(i + 1);    		
     	}
     	
-    	this.displaySuggestions.setText(suggestions + estimatedPricePerDay);
+    	this.totalGuests.setValue(1);
+    	this.singleRooms.getItems().add(null);
+    	this.doubleRooms.getItems().add(null);
+    	this.deluxRooms.getItems().add(null);
+    	this.pentHouseRooms.getItems().add(null);
+
+    	this.singleRooms.setValue(null);
+    	this.doubleRooms.setValue(null);
+    	this.doubleRooms.setValue(null);
+    	this.pentHouseRooms.setValue(null);
+    	
+    	for(int i = 0; i < ReservationManager.roomsAvailable(RoomType.SINGLE); i++) {
+    		this.singleRooms.getItems().add(i + 1);    		
+    	}
+    	for(int i = 0; i < ReservationManager.roomsAvailable(RoomType.DOUBLE); i++) {
+    		this.doubleRooms.getItems().add(i + 1);    		
+    	}
+    	for(int i = 0; i < ReservationManager.roomsAvailable(RoomType.DELUX); i++) {
+    		this.deluxRooms.getItems().add(i + 1);    		
+    	}
+    	for(int i = 0; i < ReservationManager.roomsAvailable(RoomType.PENTHOUSE); i++) {
+    		this.pentHouseRooms.getItems().add(i + 1);    		
+    	}
+    	
+    	// https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DatePicker.html
+    	
+        this.checkIn.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate minDate = LocalDate.now();
+                setDisable(empty || date.isBefore(minDate));
+            }
+        });
+
+        this.checkOut.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate minDate = LocalDate.now().plusDays(1);
+                setDisable(empty || date.isBefore(minDate));
+            }
+        });
+        
+        this.checkIn.setValue(LocalDate.now());
+        this.checkOut.setValue(LocalDate.now().plusDays(1));
+        this.warning.setFill(Color.RED);
     	
     }
     
+    private void setDefaults() {
+    	BookRoomController.isAdmin = false;
+    	this.requireFieldWarning.setFill(Color.BLACK);
+    }
+    
+    public static void setAdmin() {
+    	BookRoomController.isAdmin = true;
+    }
+    
+	@FXML
+	private void handleGoBackButtonClick() {
+		
+		if(!AlertBox.confirmation("Are you sure you want to go back?")) return;
+		
+		if(BookRoomController.isAdmin) _FXMLUtil.setScreen(root, "AdminPanel.fxml");
+		else _FXMLUtil.setScreen(root, "Welcome.fxml");
+	
+	}
+	
+	private boolean checkAllRequireFields() {
+		return !this.firstName.getText().isEmpty()
+			&& !this.lastName.getText().isEmpty()
+			&& !this.address.getText().isEmpty()
+			&& !this.email.getText().isEmpty()
+			&& !this.phone.getText().isEmpty();
+	}
+	
+	private boolean checkRoomsSelected() {
+		return this.singleRooms.getValue() != null
+			|| this.doubleRooms.getValue() != null
+			|| this.deluxRooms.getValue() != null
+			|| this.pentHouseRooms.getValue() != null;
+	}
+	
+	private RoomLinkedList getSelectedRoomList(){
+		
+		RoomLinkedList roomsSelected = new RoomLinkedList();
+		
+		if(this.singleRooms.getValue() != null) {
+			roomsSelected.add(RoomType.SINGLE, this.singleRooms.getValue());
+		}
+		
+		if(this.doubleRooms.getValue() != null) {
+			roomsSelected.add(RoomType.DOUBLE, this.doubleRooms.getValue());
+		}
+		
+		if(this.deluxRooms.getValue() != null) {
+			roomsSelected.add(RoomType.DELUX, this.deluxRooms.getValue());
+		}
+		
+		if(this.pentHouseRooms.getValue() != null) {
+			roomsSelected.add(RoomType.PENTHOUSE, this.pentHouseRooms.getValue());
+		}
+		
+		return roomsSelected;
+		
+	}
+	
+	private boolean checkEmailFormat(String email) {
+		return email.contains("@");
+	}
+	
+	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
+	private boolean checkPhoneNumberFormat(String phoneNumber) {
+		    Pattern regex = Pattern.compile("^\\d{10}$");
+		    Matcher matcher = regex.matcher(phoneNumber);
+	        return matcher.matches();
+	}
+	
+	@FXML
+	private void handleCheckInButtonClick() {
+		
+		if(!this.checkAllRequireFields()) {
+			this.requireFieldWarning.setFill(Color.RED);
+			return;
+		}
+		
+		if(!this.checkRoomsSelected()) {
+			this.warning.setText("Please select rooms to book.");
+			return;
+		}
+		
+		if(!this.checkEmailFormat(this.email.getText()) || !this.checkPhoneNumberFormat(this.phone.getText())) {
+			this.warning.setText("Please check the email/phone format.");
+			return;
+		}
+		
+		RoomLinkedList roomsSelected = this.getSelectedRoomList();
+		
+		boolean reserved = ReservationManager.addReservation(this.firstName.getText(), this.lastName.getText(),
+									  					 this.address.getText(), this.email.getText(), 
+									  					 this.phone.getText(), this.totalGuests.getValue(), 
+									  					 java.sql.Date.valueOf(this.checkIn.getValue()), 
+									  					 java.sql.Date.valueOf(this.checkOut.getValue()), 
+									  					 roomsSelected);
+	
+		if(!reserved) {
+			this.warning.setText("Internal Server Error");
+			return;
+		}
+		
+		this.setDefaults();
+		_FXMLUtil.setScreen(root, "AdminPanel.fxml");
+		
+	}
+	
 }

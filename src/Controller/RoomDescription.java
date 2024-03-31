@@ -22,4 +22,13 @@ public class RoomDescription {
 						DeluxRoomCostPerDay = 120,
 						PentHouseCostPerDay = 250;
 	
+	public final static int maxGuestPerReservation = 10;
+	
+	public static enum RoomType {
+		SINGLE,
+		DOUBLE,
+		DELUX,
+		PENTHOUSE
+	}
+	
 }

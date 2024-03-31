@@ -71,9 +71,7 @@ public class LoginFormController {
 
         	System.out.println("Login Successful by " + this.adminId);
         	
-        	// Redirect the user to admin panel.
-            BorderPane AdminPanelPane = FXMLLoader.load(getClass().getResource("AdminPanel.fxml"));
-            root.setCenter(AdminPanelPane);
+            _FXMLUtil.setScreen(root, "AdminPanel.fxml");
         
         } catch (Exception e) {
             e.printStackTrace();
