@@ -8,6 +8,7 @@ import Model.*;
 public class ReservationController {
 
 	private Reservation reservation;
+	private boolean valid;
 	  
 	public ReservationController(int id, String firstName, String lastName, String address, String email, 
 								 String phone, int totalGuests, Date checkIn, Date checkOut, 
@@ -21,26 +22,52 @@ public class ReservationController {
  		
 		Customer customer = new Customer(firstName, lastName, address, email, phone, totalGuests);
 		this.reservation  = new Reservation(id, customer, _roomsReserved, checkIn, checkOut);
+		this.valid = true;
 		
 	}
 	
-	public String getCustomerName() {
-		return this.reservation.getCustomer().getName();
+	public int getId() {
+		return this.reservation.getId();
 	}
 	
-	public Date getCheckIn() {
+	public Reservation getReservation() {
+		return this.reservation;
+	}
+	
+	private String getCustomerName() {
+		return this.reservation.getCustomerName();
+	}
+	
+	private Date getCheckIn() {
 		return this.reservation.getCheckIn();
 	}
 	
-	public Date getCheckOut() {
+	private Date getCheckOut() {
 		return this.reservation.getCheckOut();
+	}
+	
+	private String getRoomDetails() {
+		return this.reservation.toString();
+	}
+	
+	public ArrayList<Room> getReservedRoom(){
+		return this.reservation.getReservedRoom();
 	}
 	
 	@Override
 	public String toString() {
 	    return "Customer Name: " + this.getCustomerName() 
-	    + "\n Check In: " + this.getCheckIn() 
-	    + "\n Check Out: " + this.getCheckOut();
+	    + "\nCheck In: " + this.getCheckIn() 
+	    + "\nCheck Out: " + this.getCheckOut()
+	    + "\nRoom Details:\n" + this.getRoomDetails();
+	}
+	
+	public void setIsValid(boolean _isValid) {
+		this.valid = _isValid;
+	}
+	
+	public boolean isValid() {
+		return this.valid;
 	}
 	
 }

@@ -1,26 +1,26 @@
 package Controller;
 
+import Controller.RoomDescription.RoomType;
 import Model.Room;
 
 public class RoomController {
 	
 	private Room 	room;
-	private boolean booked;
 	
-	public RoomController(String _id, int _maxGuestAllowed, double _costPerDay, RoomDescription.RoomType _roomType) {
-		this.room 	= new Room(_id, _maxGuestAllowed, _costPerDay, _roomType);
-		this.booked = false;
+	public RoomController(String _id, int _maxGuestAllowed, double _costPerDay, 
+						  RoomDescription.RoomType _roomType) {
+		this.room 	= new Room(_id, _maxGuestAllowed, _costPerDay, _roomType, false);
 	}
 	
-	public boolean getBooked() {
-		return this.booked;
+	public boolean isBooked() {
+		return this.room.isBooked();
 	}
 	
 	public int getMaxAllowedGuests() {
 		return this.room.getMaxAllowedGuests();
 	}
 	
-	public String getType() {
+	public RoomType getType() {
 		return this.room.getType();
 	}
 	
@@ -33,7 +33,7 @@ public class RoomController {
 	}
 	
 	public void setBooked(boolean _booked) {
-		this.booked = _booked;
+		this.room.setBooked(_booked);
 	}
 	
 }

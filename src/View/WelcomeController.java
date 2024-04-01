@@ -9,11 +9,12 @@ public class WelcomeController {
 
     @FXML
     private BorderPane root;
-    private ReservationManager roomsAvailable;
+    private static ReservationManager roomsAvailable = null;
     
     @FXML
     public void initialize() {
-        this.roomsAvailable = new ReservationManager();
+    	if(WelcomeController.roomsAvailable == null)
+    		WelcomeController.roomsAvailable = new ReservationManager();
     }
 
     @FXML

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import Controller.RoomDescription.RoomType;
+import Model.Receipt;
+import Model.Reservation;
+import Model.Room;
 
 public class ReservationManager {
 
@@ -12,6 +15,7 @@ public class ReservationManager {
     			   			 		  	     deluxRooms 	= new ArrayList<>(),
     			   			 		  	     pentHouseRooms = new ArrayList<>();
 	private static ArrayList<ReservationController> allReservation = new ArrayList<>();
+	private static ArrayList<ReceiptController> allReceipts = new ArrayList<>();
 	
 	public ReservationManager() {
 		
@@ -67,7 +71,7 @@ public class ReservationManager {
 		int _roomsAvailable = 0;
 		
 		for(RoomController room : roomGroup) {
-			if(!room.getBooked()) _roomsAvailable++;
+			if(!room.isBooked()) _roomsAvailable++;
 		}
 
 		return _roomsAvailable;
@@ -88,7 +92,9 @@ public class ReservationManager {
 		
 	}
 	
-	private static void bookRooms(ArrayList<RoomController> roomGroup, int roomsRequire) {
+	private static void bookRooms(ArrayList<RoomController> roomGroup, 
+								  ArrayList<RoomController> reserveRoom, 
+								  int roomsRequire) {
 		
 		int roomsBooked = 0;
 		
@@ -96,8 +102,8 @@ public class ReservationManager {
 			
 			RoomController room = roomGroup.get(i);
 			
-			if(!room.getBooked() && roomsBooked < roomsRequire) {
-				roomGroup.add(room);
+			if(!room.isBooked() && roomsBooked < roomsRequire) {
+				reserveRoom.add(room);
 				room.setBooked(true);
 				roomsBooked++;
 			}
@@ -107,8 +113,8 @@ public class ReservationManager {
 	}
 	
 	public static boolean addReservation(String firstName, String lastName, String address, String email,
-								  String phone, int totalGuests, Date checkIn, Date checkOut,
-								  RoomLinkedList roomsSelected) {
+								  		 String phone, int totalGuests, Date checkIn, Date checkOut,
+								  		 RoomLinkedList roomsSelected) {
 		
 		ArrayList<RoomController> roomsReserved = new ArrayList<>();
 		RoomLinkedList.Node firstRoom = roomsSelected.getHead();
@@ -116,16 +122,19 @@ public class ReservationManager {
 		while(firstRoom != null) {
 			
 			if(firstRoom.getType().equals(RoomType.SINGLE))
-				ReservationManager.bookRooms(ReservationManager.singleRooms, firstRoom.getTotalRooms());
+				ReservationManager.bookRooms(ReservationManager.singleRooms, roomsReserved, firstRoom.getTotalRooms());
 			else if(firstRoom.getType().equals(RoomType.DOUBLE))
-				ReservationManager.bookRooms(ReservationManager.doubleRooms, firstRoom.getTotalRooms());
+				ReservationManager.bookRooms(ReservationManager.doubleRooms, roomsReserved, firstRoom.getTotalRooms());
 			if(firstRoom.getType().equals(RoomType.DELUX))
-				ReservationManager.bookRooms(ReservationManager.deluxRooms, firstRoom.getTotalRooms());
+				ReservationManager.bookRooms(ReservationManager.deluxRooms, roomsReserved, firstRoom.getTotalRooms());
 			if(firstRoom.getType().equals(RoomType.PENTHOUSE))
-				ReservationManager.bookRooms(ReservationManager.pentHouseRooms, firstRoom.getTotalRooms());
+				ReservationManager.bookRooms(ReservationManager.pentHouseRooms, roomsReserved, firstRoom.getTotalRooms());
 			
 			firstRoom = firstRoom.getNext();
 		}
+		
+		System.out.println(ReservationManager.allReservation.size());
+		System.out.println(firstName);
 		
 		ReservationController reservation 
 		= new ReservationController(ReservationManager.allReservation.size(), firstName, lastName, 
@@ -137,8 +146,44 @@ public class ReservationManager {
 
 	}
 	
-	public static ArrayList<ReservationController> getAllReservation() {
-		return ReservationManager.allReservation;
+	public static ArrayList<ReservationController> getAllValidReservation() {
+		
+		ArrayList<ReservationController> allValidReservation = new ArrayList<>();
+		
+		for (int i = 0; i < ReservationManager.allReservation.size(); i++) {
+			ReservationController reservation = ReservationManager.allReservation.get(i);
+			System.out.println(reservation.getId());
+			if(reservation.isValid()) allValidReservation.add(reservation);
+		}
+		
+		return allValidReservation;
+	}
+	
+	public static ReceiptController generateBill(ReservationController reservation) {
+		
+		ArrayList<Room> reservedRooms = reservation.getReservedRoom();
+		
+		for(int i = 0; i < reservedRooms.size(); i++) {
+			reservedRooms.get(i).setBooked(false);
+		}
+		
+		for(int i = 0; i < ReservationManager.allReservation.size(); i++) {
+			ReservationController _reservation = ReservationManager.allReservation.get(i);
+			
+			if(_reservation.getId() == reservation.getId()) {
+				_reservation.setIsValid(false);
+				break;
+			}
+			
+		}
+		
+		ReceiptController receipt = new ReceiptController(ReservationManager.allReceipts.size(), 
+														  reservation.getReservation(), 0.0);
+		
+		ReservationManager.allReceipts.add(receipt);
+		
+		return receipt;
+		
 	}
 	
 	/*

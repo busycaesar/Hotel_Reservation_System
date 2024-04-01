@@ -7,7 +7,7 @@ import Controller.RoomDescription;
 import Controller.RoomDescription.RoomType;
 import Controller.RoomLinkedList;
 import Controller.ReservationManager;
-import UtilityFunction.AlertBox;
+import UtilityFunction.DialogBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DateCell;
@@ -115,7 +115,7 @@ public class BookRoomController {
 	@FXML
 	private void handleGoBackButtonClick() {
 		
-		if(!AlertBox.confirmation("Are you sure you want to go back?")) return;
+		if(!DialogBox.confirmation("Are you sure you want to go back?")) return;
 		
 		if(BookRoomController.isAdmin) _FXMLUtil.setScreen(root, "AdminPanel.fxml");
 		else _FXMLUtil.setScreen(root, "Welcome.fxml");
