@@ -31,6 +31,25 @@ public class DialogBox {
 	    return alert.getResult() == ButtonType.OK;
 	}
 	
+	public static <T> void listView(ArrayList<T> lists, String title) {
+		
+    	ListView<T> listView = new ListView<>();
+        VBox vBox = new VBox();
+        
+        listView.getItems().addAll(lists);
+        listView.setPrefSize(500, 300);
+        
+        vBox.getChildren().addAll(listView);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.getDialogPane().setContent(vBox);
+        alert.showAndWait();
+	    
+	}
+	
 	public static <T> void listView(ArrayList<T> lists, String title, String buttonTitle, performAction<T> action) {
 		
     	ListView<T> listView = new ListView<>();
@@ -39,7 +58,7 @@ public class DialogBox {
         ButtonType button = new ButtonType(buttonTitle);
         
         listView.getItems().addAll(lists);
-        listView.setPrefSize(300, 200);
+        listView.setPrefSize(500, 300);
         
         vBox.getChildren().addAll(listView);
 

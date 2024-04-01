@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import Controller.RoomDescription.RoomType;
+import Controller.RoomLinkedList.Node;
 import Model.Receipt;
 import Model.Reservation;
 import Model.Room;
@@ -186,37 +187,40 @@ public class ReservationManager {
 		
 	}
 	
-	/*
-	public RoomLinkedList getRoomsAvailable() {
+	public static ArrayList<Node> getRoomsAvailable() {
 		
-		RoomLinkedList roomsAvailable = new RoomLinkedList();
+		ArrayList<Node> roomsAvailable = new ArrayList<>();
 		
-		int singleRoomsAvailable = RoomsAvailable.countRooms(RoomsAvailable.singleRooms),
-			doubleRoomsAvailable = RoomsAvailable.countRooms(RoomsAvailable.doubleRooms),
-			deluxRoomsAvailable = RoomsAvailable.countRooms(RoomsAvailable.deluxRooms),
-			pentHouseRoomsAvailable = RoomsAvailable.countRooms(RoomsAvailable.pentHouseRooms);
+		int singleRoomsAvailable = ReservationManager.countRooms(ReservationManager.singleRooms),
+			doubleRoomsAvailable = ReservationManager.countRooms(ReservationManager.doubleRooms),
+			deluxRoomsAvailable = ReservationManager.countRooms(ReservationManager.deluxRooms),
+			pentHouseRoomsAvailable = ReservationManager.countRooms(ReservationManager.pentHouseRooms);
 		
 		if (singleRoomsAvailable > 0) {
-			roomsAvailable.add(RoomType.SINGLE, singleRoomsAvailable);			
+			Node roomNode = new Node(RoomType.SINGLE, singleRoomsAvailable);
+			roomsAvailable.add(roomNode);
 		}
 		
 		if (doubleRoomsAvailable > 0) {
-			roomsAvailable.add(RoomType.DOUBLE, doubleRoomsAvailable);			
+			Node roomNode = new Node(RoomType.DOUBLE, doubleRoomsAvailable);
+			roomsAvailable.add(roomNode);		
 		}
 		
 		if (deluxRoomsAvailable > 0) {
-			roomsAvailable.add(RoomType.DELUX, deluxRoomsAvailable);			
+			Node roomNode = new Node(RoomType.DELUX, deluxRoomsAvailable);
+			roomsAvailable.add(roomNode);			
 		}
 		
 		if (pentHouseRoomsAvailable > 0) {
-			roomsAvailable.add(RoomType.PENTHOUSE, pentHouseRoomsAvailable);			
+			Node roomNode = new Node(RoomType.PENTHOUSE, pentHouseRoomsAvailable);
+			roomsAvailable.add(roomNode);		
 		}
 		
 		return roomsAvailable;
 		
 	}
 	
-	
+	/*
 	private RoomController [] temp(int totalGuests, ArrayList<RoomController> teemp) {
 		RoomController [] some = null;
 		int roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDeluxRoom),

@@ -30,6 +30,11 @@ public class RoomLinkedList {
         	return this.numRooms;
         }
         
+    	@Override
+    	public String toString() {
+    	    return this.roomType.toString() + ": " + this.numRooms;
+    	}
+        
     }
 
     public RoomLinkedList() {

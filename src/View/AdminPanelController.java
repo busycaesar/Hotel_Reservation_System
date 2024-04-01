@@ -6,6 +6,8 @@ import java.util.Optional;
 import Controller.ReceiptController;
 import Controller.ReservationController;
 import Controller.ReservationManager;
+import Controller.RoomLinkedList;
+import Controller.RoomLinkedList.Node;
 import UtilityFunction.DialogBox;
 import javafx.collections.FXCollections;
 import javafx.css.converter.StringConverter;
@@ -22,6 +24,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class AdminPanelController {
@@ -29,7 +32,18 @@ public class AdminPanelController {
     @FXML
     private BorderPane root;
     @FXML
-    private Text temp;
+    private Text warning;
+   
+    @FXML
+    public void initialize() {
+    	
+    	this.setDefaults();
+
+    }
+    
+    private void setDefaults() {
+    	this.warning.setText("");
+    }
     
     @FXML
     private void handleBookRoomButtonClick() {
@@ -48,8 +62,8 @@ public class AdminPanelController {
      	ReceiptController receipt = ReservationManager.generateBill(reservation);
      	
      	String totalBill = "Total Bill:"
-     			+ "\nNet Amount: " + receipt.getNetTotalAfterDiscount()
-     			+ "\nTotal Amount: " + receipt.getTotalAmount();
+     			+ "\nNet Amount: $" + receipt.getNetTotalAfterDiscount()
+     			+ "\nTotal Amount: $" + receipt.getTotalAmount();
      	
      	DialogBox.information("Final Receipt", totalBill);
      	
@@ -60,6 +74,12 @@ public class AdminPanelController {
         	
     	ArrayList<ReservationController> allReservation = ReservationManager.getAllValidReservation();
     	
+    	if(allReservation.size() <= 0) {
+    		this.warning.setFill(Color.RED);
+    		this.warning.setText("No current reservation.");
+    		return;
+    	}
+    	
     	DialogBox.listView(allReservation, "Current Reservation", "Generate Bill", 
     			(ReservationController reservation) -> generateBill(reservation)
     	);
@@ -68,12 +88,22 @@ public class AdminPanelController {
     
     @FXML
     private void handleAvailableRoomsButtonClick() {
-        	_FXMLUtil.setScreen(root, "Welcome.fxml");
+        
+    	ArrayList<Node> allAvailableRooms = ReservationManager.getRoomsAvailable();
+    	
+    	if(allAvailableRooms.size() <= 0) {
+    		this.warning.setFill(Color.RED);
+    		this.warning.setText("No rooms available.");
+    		return;
+    	}
+    	
+    	DialogBox.listView(allAvailableRooms, "Available Rooms");
+    	
     }
     
     @FXML
     private void handleExitButtonClick() {
-        	_FXMLUtil.setScreen(root, "Welcome.fxml");
+        _FXMLUtil.setScreen(root, "Welcome.fxml");
     }
 	
 }

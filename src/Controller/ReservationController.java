@@ -54,12 +54,17 @@ public class ReservationController {
 		return this.reservation.getReservedRoom();
 	}
 	
+	private String getCustomerContactDetails() {
+		return this.reservation.getCustomerContactDetails();
+	}
+	
 	@Override
 	public String toString() {
 	    return "Customer Name: " + this.getCustomerName() 
 	    + "\nCheck In: " + this.getCheckIn() 
 	    + "\nCheck Out: " + this.getCheckOut()
-	    + "\nRoom Details:\n" + this.getRoomDetails();
+	    + "\nRoom Details:\n" + this.getRoomDetails()
+	    + "Contact Details:\n" + this.getCustomerContactDetails();
 	}
 	
 	public void setIsValid(boolean _isValid) {

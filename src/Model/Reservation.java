@@ -46,6 +46,10 @@ public class Reservation {
 		return this.customer.getName();
 	}
 	
+	public String getCustomerContactDetails() {
+		return this.customer.getContactDetails();
+	}
+	
 	public Date getCheckIn() {
 		return this.checkIn;
 	}

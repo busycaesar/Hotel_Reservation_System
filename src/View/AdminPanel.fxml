@@ -28,32 +28,27 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <Button layoutX="511.0" layoutY="164.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleBookRoomButtonClick" text="Book room">
+                  <Button layoutX="511.0" layoutY="182.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleBookRoomButtonClick" text="Book room">
                                        <font>
                         <Font size="16.0" />
                      </font>
                      </Button>
-                  <Button layoutX="511.0" layoutY="212.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleBillServiceButtonClick" text="Bill Service">
+                  <Button layoutX="511.0" layoutY="277.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAvailableRoomsButtonClick" text="Available Rooms">
                               <font>
                         <Font size="16.0" />
                      </font>
                      </Button>
-                  <Button layoutX="511.0" layoutY="309.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAvailableRoomsButtonClick" text="Available Rooms">
+                  <Button layoutX="511.0" layoutY="229.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleCurrentBookingsButtonClick" text="Current Bookings">
                               <font>
                         <Font size="16.0" />
                      </font>
                      </Button>
-                  <Button layoutX="511.0" layoutY="261.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleCurrentBookingsButtonClick" text="Current Bookings">
+                  <Button layoutX="511.0" layoutY="325.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleExitButtonClick" text="Exit">
                               <font>
                         <Font size="16.0" />
                      </font>
                      </Button>
-                  <Button layoutX="511.0" layoutY="357.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleExitButtonClick" text="Exit">
-                              <font>
-                        <Font size="16.0" />
-                     </font>
-                     </Button>
-                  <Text fx:id="temp" layoutX="448.0" layoutY="437.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="275.0">
+                  <Text fx:id="warning" layoutX="296.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="580.0">
                      <font>
                         <Font size="20.0" />
                      </font>

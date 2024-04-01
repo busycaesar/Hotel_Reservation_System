@@ -27,4 +27,17 @@ public class Customer {
 		return this.firstName + " " + this.lastName;
 	}
 	
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public String getContactDetails() {
+		return "Phone: " + this.phone 
+		   + "\nEmail: " + this.email;
+	}
+	
+	public String getPhone() {
+		return this.phone;
+	}
+	
 }
