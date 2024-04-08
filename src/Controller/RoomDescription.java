@@ -17,7 +17,7 @@ public class RoomDescription {
 						PrefixDeluxRoomId = "30",
 						PrefixPentHouseId = "40";
 	
-	final static double SingleRoomCostPerDay = 30,
+	public final static double SingleRoomCostPerDay = 30,
 						DoubleRoomCostPerDay = 50,
 						DeluxRoomCostPerDay = 120,
 						PentHouseCostPerDay = 250;

@@ -134,9 +134,6 @@ public class ReservationManager {
 			firstRoom = firstRoom.getNext();
 		}
 		
-		System.out.println(ReservationManager.allReservation.size());
-		System.out.println(firstName);
-		
 		ReservationController reservation 
 		= new ReservationController(ReservationManager.allReservation.size(), firstName, lastName, 
 									address, email, phone, totalGuests, checkIn, checkOut, roomsReserved);
@@ -158,6 +155,12 @@ public class ReservationManager {
 		}
 		
 		return allValidReservation;
+	}
+	
+	public static ArrayList<ReservationController> getAllReservation() {
+		
+		return ReservationManager.allReservation;
+		
 	}
 	
 	public static ReceiptController generateBill(ReservationController reservation) {
@@ -187,14 +190,30 @@ public class ReservationManager {
 		
 	}
 	
+	public static int getSingleRoomsAvailable() {
+		return ReservationManager.countRooms(ReservationManager.singleRooms);
+	}
+	
+	public static int getDoubleRoomsAvailable() {
+		return ReservationManager.countRooms(ReservationManager.doubleRooms);
+	}
+
+	public static int getDeluxRoomsAvailable() {
+		return ReservationManager.countRooms(ReservationManager.deluxRooms);
+	}
+
+	public static int getPentHouseRoomsAvailable() {
+		return ReservationManager.countRooms(ReservationManager.pentHouseRooms);
+	}
+	
 	public static ArrayList<Node> getRoomsAvailable() {
 		
 		ArrayList<Node> roomsAvailable = new ArrayList<>();
 		
-		int singleRoomsAvailable = ReservationManager.countRooms(ReservationManager.singleRooms),
-			doubleRoomsAvailable = ReservationManager.countRooms(ReservationManager.doubleRooms),
-			deluxRoomsAvailable = ReservationManager.countRooms(ReservationManager.deluxRooms),
-			pentHouseRoomsAvailable = ReservationManager.countRooms(ReservationManager.pentHouseRooms);
+		int singleRoomsAvailable = ReservationManager.getSingleRoomsAvailable(),
+			doubleRoomsAvailable = ReservationManager.getDoubleRoomsAvailable(),
+			deluxRoomsAvailable = ReservationManager.getDeluxRoomsAvailable(),
+			pentHouseRoomsAvailable = ReservationManager.getPentHouseRoomsAvailable();
 		
 		if (singleRoomsAvailable > 0) {
 			Node roomNode = new Node(RoomType.SINGLE, singleRoomsAvailable);

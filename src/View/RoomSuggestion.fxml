@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -29,45 +28,82 @@
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Text layoutX="525.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Guest">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Button layoutX="502.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleGetSuggestionsButtonClick" text="Get suggestions">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
                 <Button layoutX="40.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleGoBackButtonClick" text="Go back">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Text layoutX="514.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adults*">
+                  <Text fx:id="maxGuestsAllowed" layoutX="48.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
+                  <Text layoutX="497.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rooms Available:">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="20.0" />
                      </font>
                   </Text>
-                  <Text layoutX="517.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kids">
+                  <Text fx:id="singleRoomAvailable" layoutX="341.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="totalAdults" layoutX="579.0" layoutY="202.0" prefHeight="34.0" prefWidth="48.0" />
-                  <TextField fx:id="totalKids" layoutX="579.0" layoutY="255.0" prefHeight="34.0" prefWidth="48.0" />
-                  <Text fx:id="maxGuestsAllowed" layoutX="426.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: Single adult can book for maximum of 10 members." />
-                  <Text fx:id="displaySuggestions" layoutX="138.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="863.0">
+                  <Text fx:id="singleRoomMaxAllowed" layoutX="341.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text fx:id="displayWarning" fill="RED" layoutX="217.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="710.0">
+                  <Text fx:id="singleRoomCostPerDay" layoutX="340.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text fx:id="requiredFields" layoutX="478.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fields marked with '*' are required." />
+                  <Text fx:id="doubleRoomAvailable" layoutX="640.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="doubleRoomMaxAllowed" layoutX="640.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="doubleRoomCostPerDay" layoutX="639.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="deluxRoomAvailable" layoutX="342.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="deluxRoomMaxAllowed" layoutX="342.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="deluxRoomCostPerDay" layoutX="341.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="pentHouseRoomAvailable" layoutX="640.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="pentHouseRoomMaxAllowed" layoutX="640.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="pentHouseRoomCostPerDay" layoutX="639.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Button onAction="#handleBookRoomButtonClick" layoutX="514.0" layoutY="436.0" mnemonicParsing="false" text="Book Room/s">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
          </center>

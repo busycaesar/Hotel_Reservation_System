@@ -217,8 +217,12 @@ public class BookRoomController {
 			return;
 		}
 		
+		System.out.println(BookRoomController.isAdmin);
+		
+		if(BookRoomController.isAdmin) _FXMLUtil.setScreen(root, "AdminPanel.fxml");
+		else _FXMLUtil.setScreen(root, "Welcome.fxml");
+
 		this.setDefaults();
-		_FXMLUtil.setScreen(root, "AdminPanel.fxml");
 		
 	}
 	

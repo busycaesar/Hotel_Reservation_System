@@ -51,13 +51,8 @@ public class AdminPanelController {
        	_FXMLUtil.setScreen(root, "BookRoom.fxml");
     }
     
-    @FXML
-    private void handleBillServiceButtonClick() {
-        	
-        	_FXMLUtil.setScreen(root, "Welcome.fxml");
-    }
-    
     private void generateBill(ReservationController reservation) {
+    	
     	
      	ReceiptController receipt = ReservationManager.generateBill(reservation);
      	
@@ -104,6 +99,21 @@ public class AdminPanelController {
     @FXML
     private void handleExitButtonClick() {
         _FXMLUtil.setScreen(root, "Welcome.fxml");
+    }
+    
+    @FXML
+    private void handleBillServiceButtonClick() {
+    	
+    	ArrayList<ReservationController> allReservation = ReservationManager.getAllReservation();
+    	
+    	if(allReservation.size() <= 0) {
+    		this.warning.setFill(Color.RED);
+    		this.warning.setText("No current reservation.");
+    		return;
+    	}
+    	
+    	DialogBox.listView(allReservation, "Current Reservation");
+    	
     }
 	
 }

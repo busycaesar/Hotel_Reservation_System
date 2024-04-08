@@ -19,24 +19,12 @@ public class WelcomeController {
 
     @FXML
     private void handleBookRoomButtonClick() {
-        try {
-        	
-        	_FXMLUtil.setScreen(root, "RoomSuggestion.fxml");
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        _FXMLUtil.setScreen(root, "RoomSuggestion.fxml");
     }
     
     @FXML
     private void handleLoginButtonClick() {
-        try {
-        	
-        	_FXMLUtil.setScreen(root, "LoginForm.fxml");
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        _FXMLUtil.setScreen(root, "LoginForm.fxml");
     }
     
 }
