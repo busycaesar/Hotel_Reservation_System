@@ -39,7 +39,7 @@ public class ReceiptController {
 	@Override
 	public String toString() {
 		
-	    String information = "Receipt Id:   " + this.getId()
+	    String information = "Receipt Id:    " + this.getId()
 	    	 			   + "\nNet Amount:  $" + this.getNetTotalAfterDiscount()
 	    	 			   + "\nDiscount:     " + this.getDiscount() + "%"
 	    	 			   + "\nTax:         $" + this.getTax()

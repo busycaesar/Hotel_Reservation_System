@@ -412,14 +412,19 @@ public class HotelReservationDB {
 	    String _queryRoomsReservedUsingReservationId = "SELECT r.id, r.roomType, r.booked " 
 	    											 + "FROM Rooms r "
 	    											 + "INNER JOIN RoomsReserved rr ON r.id = rr.roomId " 
-	    											 + "WHERE rr.reservationId = " + reservationId;
+	    											 + "WHERE rr.reservationId = ?";
 		ArrayList<Room> roomsReserved 				 = new ArrayList<>();
 
-		try(Connection connection = HotelReservationDB.connect();
-			Statement statement   = connection.createStatement();
-			ResultSet result 	  = statement.executeQuery(_queryRoomsReservedUsingReservationId)){
+		try(Connection 		  connection = HotelReservationDB.connect();
+			PreparedStatement statement  = connection.prepareStatement(_queryRoomsReservedUsingReservationId)){
 			
-			roomsReserved = DBUtilFunctions.convertIntoRooms(result);
+			statement.setInt(1, reservationId);
+			
+        	try(ResultSet result = statement.executeQuery()){
+        		
+        		roomsReserved = DBUtilFunctions.convertIntoRooms(result);
+        		
+        	}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -486,14 +491,19 @@ public class HotelReservationDB {
 		
 		String _queryCustomerUsingId = "SELECT * "
 									 + "FROM Customers "
-									 + "WHERE id = " + customerId;
+									 + "WHERE id = ?";
 		Customer customer 			 = null;
 
-		try(Connection connection = HotelReservationDB.connect();
-			Statement statement   = connection.createStatement();
-			ResultSet result 	  = statement.executeQuery(_queryCustomerUsingId)){
+		try(Connection 		  connection = HotelReservationDB.connect();
+			PreparedStatement statement  = connection.prepareStatement(_queryCustomerUsingId)){
 			
-			customer = DBUtilFunctions.convertIntoCustomers(result).get(0);
+			statement.setInt(1, customerId);
+			
+        	try(ResultSet result = statement.executeQuery()){
+        		
+        		customer = DBUtilFunctions.convertIntoCustomers(result).get(0);
+
+        	}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -569,8 +579,8 @@ public class HotelReservationDB {
 		ArrayList<Reservation> reservations = new ArrayList<>();
 
 		try(Connection connection = HotelReservationDB.connect();
-			Statement statement   = connection.createStatement();
-			ResultSet result 	  = statement.executeQuery(queryReservationUsingCustomerId)){
+			Statement  statement  = connection.createStatement();
+			ResultSet  result 	  = statement.executeQuery(queryReservationUsingCustomerId)){
 			
 			reservations = DBUtilFunctions.convertIntoReservations(result);
 			

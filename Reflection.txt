@@ -1,0 +1,11 @@
+Reflection:
+
+Challenges Faced:
+
+1. System Design: Designing the whole system was a chanllenging work since it involved deciding all the classes require for the whole project and figuring out the relationship between those classes to maintain a good flow of logic within the project so that MVC architecture is being maintained.
+2. Working with DB: Integrating the DB with the project was also challenging. Designing all the function to working with storing as well as retriving the exact data require and later on converting that data into the objects of the classes we have was one another chanllenge.
+
+Learned:
+
+1. Working with DB: This was the first application which involved integrating the SQLite with JavaFx project and it was really interesting to learn. One thing which I learnt is how to execute the queries through code. Additionally, PreparedStatement is something which I learned. It helps entering the data into the query string created. Data should not be entered directly into the string since it can have some SQL Injection. Hence, always using PrepareStatement makes sure that all such injections are prevented.
+2. Modularization: To have the whole DB setup with all the require functions, also require a lot of modularization like, dividing all the queries and general functions in a separate class. Also identifying the similar logic in the whole code and separating it into a util class from where it can be accessed anything in the project makes sense. For eg, I make a util class for all the dialog box I require and call those boxes from all over my program. This not just separates the common logic to a separate, but also makes the code readable.

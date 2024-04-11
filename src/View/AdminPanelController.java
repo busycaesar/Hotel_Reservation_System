@@ -12,6 +12,7 @@ import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -107,6 +108,16 @@ public class AdminPanelController {
     private void handleExitButtonClick() {
 		Platform.exit();
 		System.exit(0);
+    }
+    
+    @FXML
+    private void handleGoBackButtonClick() {
+        try {
+            BorderPane WelcomePane = FXMLLoader.load(getClass().getResource("Welcome.fxml"));
+            root.setCenter(WelcomePane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML
