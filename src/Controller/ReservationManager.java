@@ -1,13 +1,11 @@
 package Controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import Model.Room.RoomType;
 import Controller.RoomLinkedList.Node;
 import Database.DBController;
-import Database.HotelReservationDB;
 import Model.*;
 
 public class ReservationManager {

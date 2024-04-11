@@ -1,29 +1,14 @@
 package View;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 import Controller.*;
 import Controller.RoomLinkedList.Node;
 import UtilityFunction.DialogBox;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.css.converter.StringConverter;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 

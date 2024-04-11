@@ -4,13 +4,10 @@ import Controller.ReservationManager;
 import Database.DBController;
 import Model.Room.RoomType;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class RoomSuggestionsController {
+public class RoomAvalibilityController {
 
     @FXML
     private BorderPane root;

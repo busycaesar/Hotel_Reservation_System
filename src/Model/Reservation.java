@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import Model.Room.RoomType;
 import Controller.RoomLinkedList;
 import Controller.RoomLinkedList.Node;
-import Database.DBController;
 
 public class Reservation {
 
