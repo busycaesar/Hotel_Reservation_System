@@ -1,28 +1,22 @@
 package UtilityFunction;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.TextInputDialog;
 
 public class DialogBox {
 
+	// Confirmation alert box with the custom message.
 	public static boolean confirmation(String message) {
+		
 	    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	    
 	    alert.setTitle("Please confirm");
 	    alert.setHeaderText(null);
 	    alert.setContentText(message);
@@ -31,8 +25,11 @@ public class DialogBox {
 	    return alert.getResult() == ButtonType.OK;
 	}
 	
+	// Dialog box to provide some information with title and message.
 	public static boolean information(String title, String message) {
+		
 	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	    
 	    alert.setTitle(title);
 	    alert.setHeaderText(null);
 	    alert.setContentText(message);
@@ -41,20 +38,19 @@ public class DialogBox {
 	    return alert.getResult() == ButtonType.OK;
 	}
 	
+	// List view to display some list with title.
 	public static <T> void listView(ArrayList<T> list, String title) {
 		
     	ListView<T> listView = new ListView<>();
-        VBox vBox = new VBox(10);
-        
-        vBox.setPadding(new Insets(10));
+        VBox vBox 			 = new VBox(10);
+        Alert alert 		 = new Alert(Alert.AlertType.INFORMATION);
         
         listView.getItems().addAll(list);
         listView.setPrefSize(500, 300);
-        
+
+        vBox.setPadding(new Insets(10));
         vBox.getChildren().addAll(listView);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.getDialogPane().setContent(vBox);
@@ -62,21 +58,20 @@ public class DialogBox {
 	    
 	}
 	
+	// List view to display some list with title and a button which returns the selected item.
 	public static <T> T listView(ArrayList<T> list, String title, String button) {
 		
-		ListView<T> listView = new ListView<>();
+		ListView<T> listView 	= new ListView<>();
 		ButtonType selectButton = new ButtonType(button);
-        VBox vBox = new VBox(10);
-        
-        vBox.setPadding(new Insets(10));
-        
+        VBox vBox 				= new VBox(10);
+        Alert alert 			= new Alert(Alert.AlertType.INFORMATION);
+                
         listView.getItems().addAll(list);
         listView.setPrefSize(500, 300);
 
+        vBox.setPadding(new Insets(10));
         vBox.getChildren().addAll(listView);
-        
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        
+
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.getDialogPane().setContent(vBox);
@@ -93,24 +88,22 @@ public class DialogBox {
     
 	}
 	
+	// Display choice box with title, message and a button which returns the selected value.
 	public static <T> T choiceBoxView(ArrayList<T> options, String title, String message, String button) {
 
-		// FXCollections.observableArrayList(options)
-        ChoiceBox<T> choiceBox = new ChoiceBox<>();
+        ChoiceBox<T> choiceBox  = new ChoiceBox<>();
         ButtonType selectButton = new ButtonType(button);
+        Alert alert 			= new Alert(Alert.AlertType.NONE);
+        VBox vBox 				= new VBox(10);
 
-        VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(10));
-        
         choiceBox.getItems().addAll(options);
-        choiceBox.setPrefSize(500, 300);
         
+        vBox.setPadding(new Insets(10));
         vBox.getChildren().addAll(choiceBox);
-        
-        Alert alert = new Alert(Alert.AlertType.NONE);
+        vBox.setPrefSize(250, 150);
         
         alert.setTitle(title);
-        alert.setHeaderText(null);
+        alert.setHeaderText(message);
         alert.getDialogPane().setContent(vBox);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().add(selectButton);

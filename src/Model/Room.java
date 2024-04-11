@@ -14,9 +14,9 @@ public class Room {
 	}
 	
 	public Room(int _id, RoomType _roomType, boolean _booked) {
-		this.id = _id;
+		this.id 	  = _id;
 		this.roomType = _roomType;
-		this.booked = _booked;
+		this.booked   = _booked;
 	}
 	
 	public RoomType getType() {

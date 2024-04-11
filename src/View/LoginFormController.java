@@ -12,16 +12,13 @@ public class LoginFormController {
     @FXML
     private BorderPane root;
     @FXML
-    private TextField employeeId, password;
+    private TextField  employeeId, password;
     @FXML
-    private Text warning;
+    private Text 	   warning;
 
     @FXML
     public void initialize() {
-        
-        // Set defaults
-        this.setDefaults();
-        
+        this.setDefaults();    
     }
     
     // Set default values.
@@ -48,8 +45,8 @@ public class LoginFormController {
         	
         	// Get the credentials entered by the user.
         	String _receivedEmployeeId = this.employeeId.getText(),
-        			_receivedPassword = this.password.getText();
-        	int employeeId = 0;
+        		   _receivedPassword   = this.password.getText();
+        	int    employeeId 		   = 0;
         	
         	try {
         		employeeId = Integer.parseInt(_receivedEmployeeId);        		

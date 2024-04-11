@@ -72,9 +72,7 @@ public class DBController {
 		return HotelReservationDB.queryAllReservations();
 		
 	}
-	
 
-	
 	public static ArrayList<Room> getAllAvailableRooms(){
 		
 		return HotelReservationDB.queryAllAvailableRooms();
@@ -87,18 +85,24 @@ public class DBController {
 				
 	}
 	
+	public static ArrayList<Customer> getAllCustomers() {
+
+		return HotelReservationDB.queryAllCustomers();
+		
+	}
+	
 	public static int addReservation(Reservation reservation) {
 		
 		System.out.println("New Reservation");
 		
-		int totalGuests = reservation.getTotalGuests();
-		String firstName = reservation.getCustomerFirstName(), 
-				lastName = reservation.getCustomerLastName(), 
-				address = reservation.getCustomerAddress(),
-				email = reservation.getCustomerEmail(), 
-				phone = reservation.getCustomerPhoneNumber();
-		Date checkIn = reservation.getCheckIn(), 
-				checkOut = reservation.getCheckOut();
+		int 			totalGuests   = reservation.getTotalGuests();
+		String 			firstName 	  = reservation.getCustomerFirstName(), 
+						lastName 	  = reservation.getCustomerLastName(), 
+						address  	  = reservation.getCustomerAddress(),
+						email    	  = reservation.getCustomerEmail(), 
+						phone 	 	  = reservation.getCustomerPhoneNumber();
+		Date 			checkIn 	  = reservation.getCheckIn(), 
+						checkOut 	  = reservation.getCheckOut();
 		ArrayList<Room> roomsReserved = reservation.getReservedRoom();
 		
 		// Create new customer
@@ -125,12 +129,12 @@ public class DBController {
 
 	public static int addReceipt(Receipt receipt) {
 		
-		ArrayList<Room> roomsReserved = receipt.getRoomsReserved();
-		int reservationId = receipt.getReservationId();
-		double netTotalAmount = receipt.getNetTotal(),
-				discountInPercentage = receipt.getDiscount(),
-				totalAmount = receipt.getAmount(), 
-				tax = receipt.getTax();
+		ArrayList<Room> roomsReserved 		 = receipt.getRoomsReserved();
+		int 			reservationId 		 = receipt.getReservationId();
+		double 			netTotalAmount 		 = receipt.getNetTotal(),
+						discountInPercentage = receipt.getDiscount(),
+						totalAmount 		 = receipt.getAmount(), 
+						tax 				 = receipt.getTax();
 		
 		for(Room room: roomsReserved) {
 			HotelReservationDB.queryBookRoom(room.getId(), false);
@@ -142,12 +146,6 @@ public class DBController {
 		// Add receipt
 		return HotelReservationDB.addReceipt(reservationId, netTotalAmount, discountInPercentage, 
 									  totalAmount, tax);
-		
-	}
-
-	public static ArrayList<Customer> getAllCustomers() {
-
-		return HotelReservationDB.queryAllCustomers();
 		
 	}
 	

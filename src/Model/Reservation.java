@@ -11,37 +11,33 @@ import Database.DBController;
 
 public class Reservation {
 
-	private int 	 id;
+	private int 	 		id;
 	// Store the information of the customer who made the reservation.
-	private Customer customer;
+	private Customer 		customer;
 	// Store the information of the room, the customer reserved.
 	private ArrayList<Room> roomsReserved;
 	// Store the check in and check out date.
-	private Date 	 checkIn,
-					 checkOut;
-	private boolean valid;
+	private Date 	 		checkIn,
+					 		checkOut;
+	private boolean 		valid;
 	
 	public Reservation(Customer _customer, ArrayList<Room> _roomsReserved,
-		   	   Date _checkIn, Date _checkOut, boolean _valid) {
-		this.customer = _customer;
+		   	   		   Date _checkIn, Date _checkOut, boolean _valid) {
+		this.customer 	   = _customer;
 		this.roomsReserved = _roomsReserved;
-		this.checkIn  = _checkIn;
-		this.checkOut = _checkOut;
-		this.valid = _valid;
+		this.checkIn  	   = _checkIn;
+		this.checkOut 	   = _checkOut;
+		this.valid 		   = _valid;
 	}
 	
 	public Reservation(int _id, Customer _customer, ArrayList<Room> _roomsReserved,
 				   	   Date _checkIn, Date _checkOut, boolean _valid) {
-		this.id = _id;
-		this.customer = _customer;
+		this.id 		   = _id;
+		this.customer 	   = _customer;
 		this.roomsReserved = _roomsReserved;
-		this.checkIn  = _checkIn;
-		this.checkOut = _checkOut;
-		this.valid = _valid;
-	}
-	
-	public void setId(int _id) {
-		this.id = _id;
+		this.checkIn  	   = _checkIn;
+		this.checkOut 	   = _checkOut;
+		this.valid 		   = _valid;
 	}
 	
 	// https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html
@@ -57,6 +53,10 @@ public class Reservation {
 
 	public int getId() {
 		return this.id;
+	}
+	
+	public void setId(int _id) {
+		this.id = _id;
 	}
 	
 	public String getCustomerName() {
@@ -103,23 +103,6 @@ public class Reservation {
 		return this.customer.getTotalGuests();
 	}
 	
-	@Override
-	public String toString() {
-		
-		String roomDetails = "";
-		Node _room = this.getRoomDetails().getHead();
-		
-		while(_room != null) {
-			
-			roomDetails += _room.getTotalRooms() + " " 
-			+ _room.getType().toString().toLowerCase() + " Rooms\n";
-			
-			_room = _room.getNext();
-		}
-		
-		return roomDetails;
-	}
-	
 	public RoomLinkedList getRoomDetails() {
 		
 		RoomLinkedList _roomsReserved = new RoomLinkedList();
@@ -128,7 +111,7 @@ public class Reservation {
 		
 		for(Room room : this.roomsReserved) {
 			
-			if(room.getType() == RoomType.SINGLE)
+			if(room.getType() 	   == RoomType.SINGLE)
 				singleRoom++;
 			else if(room.getType() == RoomType.DOUBLE)
 				doubleRoom++;
@@ -154,6 +137,23 @@ public class Reservation {
 	
 	public boolean isValid() {
 		return this.valid;
+	}
+	
+	@Override
+	public String toString() {
+		
+		String roomDetails = "";
+		Node _room 		   = this.getRoomDetails().getHead();
+		
+		while(_room != null) {
+			
+			roomDetails += _room.getTotalRooms() + " " 
+			+ _room.getType().toString().toLowerCase() + " Rooms\n";
+			
+			_room = _room.getNext();
+		}
+		
+		return roomDetails;
 	}
 	
 }

@@ -9,13 +9,13 @@ public class RoomLinkedList {
     public static class Node {
     	
         private RoomType roomType;
-        private int numRooms;
-        private Node next;
+        private int 	 numRooms;
+        private Node 	 next;
 
         public Node(RoomType roomType, int numRooms) {
             this.roomType = roomType;
             this.numRooms = numRooms;
-            this.next = null;
+            this.next 	  = null;
         }
         
         public Node getNext() {
@@ -38,7 +38,7 @@ public class RoomLinkedList {
     }
 
     public RoomLinkedList() {
-        this.head = null;
+        this.head 	 = null;
         this.current = this.head;
     }
 
@@ -47,11 +47,11 @@ public class RoomLinkedList {
         Node newNode = new Node(roomType, numRooms);
         
         if (this.head == null) {
-            this.head = newNode;
+            this.head 	 = newNode;
             this.current = this.head;
         } else {
         	this.current.next = newNode;
-        	this.current = this.current.next;
+        	this.current 	  = this.current.next;
         }
         
     }
@@ -61,7 +61,7 @@ public class RoomLinkedList {
     }
     
     public Node getAt(int i) {
-    	int index = 0;
+    	int index 		 = 0;
     	Node currentNode = this.head;
     	while(index < i && currentNode != null) {
     		currentNode = currentNode.next;

@@ -19,23 +19,34 @@ import javafx.scene.text.Text;
 
 public class BookRoomController {
 
-	private static boolean isAdmin;
+	private static boolean     isAdmin;
     @FXML
-    private BorderPane root;
+    private BorderPane 	       root;
     @FXML
-    private ChoiceBox<Integer> totalGuests, singleRooms, doubleRooms, deluxRooms, pentHouseRooms;
+    private ChoiceBox<Integer> totalGuests, 
+    						   singleRooms, 
+    						   doubleRooms, 
+    						   deluxRooms, 
+    						   pentHouseRooms;
     @FXML
-    private DatePicker checkIn, checkOut;
+    private DatePicker 		   checkIn, 
+    						   checkOut;
     @FXML
-    private TextField firstName, lastName, address, email, phone;
+    private TextField 		   firstName, 
+    						   lastName, 
+    						   address, 
+    						   email, 
+    						   phone;
     @FXML
-    private Text requireFieldWarning, warning;
-    private final int MaxGuestPerReservation = 10;
+    private Text 			   requireFieldWarning, 
+    						   warning;
+    private final int 		   MaxGuestPerReservation = 10;
     
     @FXML
     public void initialize() {
     	
     	this.loadData();
+    	
     	if (!BookRoomController.isAdmin) this.setDefaults();
 
     }
@@ -71,7 +82,6 @@ public class BookRoomController {
     	}
     	
     	// https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DatePicker.html
-    	
         this.checkIn.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
@@ -104,6 +114,7 @@ public class BookRoomController {
     	
     }
     
+    // Sets the whole form to default
     private void setDefaults() {
     	BookRoomController.isAdmin = false;
     	this.requireFieldWarning.setFill(Color.BLACK);
@@ -123,6 +134,7 @@ public class BookRoomController {
 	
 	}
 	
+	// This makes sure all the require fields are filled before submitting the form.
 	private boolean checkAllRequireFields() {
 		return !this.firstName.getText().isEmpty()
 			&& !this.lastName.getText().isEmpty()
@@ -131,13 +143,15 @@ public class BookRoomController {
 			&& !this.phone.getText().isEmpty();
 	}
 	
+	// This makes sure the customer selected atleast any of one room.
 	private boolean checkRoomsSelected() {
-		return this.singleRooms.getValue() != null
-			|| this.doubleRooms.getValue() != null
-			|| this.deluxRooms.getValue() != null
+		return this.singleRooms.getValue() 	  != null
+			|| this.doubleRooms.getValue() 	  != null
+			|| this.deluxRooms.getValue()     != null
 			|| this.pentHouseRooms.getValue() != null;
 	}
 	
+	// Make sure the selected rooms can accommodate all the guests.
 	private RoomLinkedList verifySelectedRoomList(int guestEntered){
 		
 		RoomLinkedList roomsSelected = new RoomLinkedList();
@@ -169,15 +183,19 @@ public class BookRoomController {
 		
 	}
 	
+	// Make sure the email is in correct format
+	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
 	private boolean checkEmailFormat(String email) {
-		return email.contains("@");
+		String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+	    Pattern regex     = Pattern.compile(emailRegex);
+	    Matcher matcher   = regex.matcher(email);
+        return matcher.matches();
 	}
 	
-	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
 	private boolean checkPhoneNumberFormat(String phoneNumber) {
-		    Pattern regex = Pattern.compile("^\\d{10}$");
-		    Matcher matcher = regex.matcher(phoneNumber);
-	        return matcher.matches();
+		Pattern regex 	= Pattern.compile("^\\d{10}$");
+		Matcher matcher = regex.matcher(phoneNumber);
+	    return matcher.matches();
 	}
 	
 	@FXML
@@ -206,12 +224,15 @@ public class BookRoomController {
 			return;
 		}
 		
-		boolean reserved = ReservationManager.addReservation(this.firstName.getText(), this.lastName.getText(),
-									  					 this.address.getText(), this.email.getText(), 
-									  					 this.phone.getText(), this.totalGuests.getValue(), 
-									  					 java.sql.Date.valueOf(this.checkIn.getValue()), 
-									  					 java.sql.Date.valueOf(this.checkOut.getValue()), 
-									  					 roomsSelected);
+		boolean reserved = ReservationManager.addReservation(this.firstName.getText(), 
+															 this.lastName.getText(),
+															 this.address.getText(), 
+															 this.email.getText(), 
+															 this.phone.getText(), 
+															 this.totalGuests.getValue(), 
+															 java.sql.Date.valueOf(this.checkIn.getValue()), 
+															 java.sql.Date.valueOf(this.checkOut.getValue()), 
+															 roomsSelected);
 	
 		if(!reserved) {
 			this.warning.setText("Internal Server Error");

@@ -31,7 +31,7 @@ public class AdminPanelController {
     @FXML
     private BorderPane root;
     @FXML
-    private Text warning;
+    private Text 	   warning;
    
     @FXML
     public void initialize() {
@@ -62,9 +62,12 @@ public class AdminPanelController {
     	
     	ArrayList<Double> discountOptions = ReservationManager.getDiscountOptions();
     	
-    	Double selectedAmount = DialogBox.choiceBoxView(discountOptions, "Discount Options", "Please select discount(if require)", "Generate Bill");
+    	Double selectedAmount = 
+    			DialogBox.choiceBoxView(discountOptions, 
+    								    "Discount Options", 
+    								    "Please select discount:", "Generate Bill");
     	     	
-    	this.generateBill(reservation, selectedAmount);
+    	if(selectedAmount != null) this.generateBill(reservation, selectedAmount);
     	
     }
     
@@ -81,7 +84,7 @@ public class AdminPanelController {
     	
     	ReservationController reservationSelected = DialogBox.listView(allReservation,"Current Reservation", "Generate Bill");
 
-    	this.promptForDiscount(reservationSelected);
+    	if(reservationSelected != null) this.promptForDiscount(reservationSelected);
     	
     }
     

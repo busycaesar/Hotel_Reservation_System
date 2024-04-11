@@ -8,7 +8,7 @@ public class RoomController {
 	private Room room;
 	
 	public RoomController(Room _room) {
-		this.room 	= _room;
+		this.room = _room;
 	}
 	
 	public boolean isBooked() {

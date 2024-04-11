@@ -15,17 +15,25 @@ public class RoomSuggestionsController {
     @FXML
     private BorderPane root;
     @FXML
-    private Text singleRoomAvailable, doubleRoomAvailable, deluxRoomAvailable, pentHouseRoomAvailable,
-    singleRoomMaxAllowed, doubleRoomMaxAllowed, deluxRoomMaxAllowed, pentHouseRoomMaxAllowed, 
-    singleRoomCostPerDay, doubleRoomCostPerDay, deluxRoomCostPerDay, pentHouseRoomCostPerDay;
+    private Text 	   singleRoomAvailable, 
+	   				   doubleRoomAvailable, 
+	   				   deluxRoomAvailable, 
+	   				   pentHouseRoomAvailable,
+	   				   singleRoomMaxAllowed, 
+	   				   doubleRoomMaxAllowed, 
+	   				   deluxRoomMaxAllowed, 
+	   				   pentHouseRoomMaxAllowed, 
+	   				   singleRoomCostPerDay, 
+	   				   doubleRoomCostPerDay, 
+	   				   deluxRoomCostPerDay, 
+	   				   pentHouseRoomCostPerDay;
     
     @FXML
     public void initialize() {
-    	
     	this.loadData();
-
     }
 
+    // Loads the data of room avalibility.
     private void loadData() {
     	
     	this.singleRoomAvailable.setText("Single Rooms: " + ReservationManager.getSingleRoomsAvailable());

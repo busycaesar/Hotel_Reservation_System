@@ -6,26 +6,33 @@ import Database.DBController;
 
 public class Receipt {
 
-	private int id;
-	private Reservation reservation;
-	private double netTotalAmount, discountInPercentage, totalAmount, tax;
+	private int 		 id;
+	private Reservation  reservation;
+	private double 		 netTotalAmount, 
+						 discountInPercentage, 
+						 totalAmount, 
+						 tax;
 	private final double HST = 0.13;
 	
 	public Receipt(Reservation _reservation, double _discountInPercentage) {
-		this.reservation = _reservation;
+		this.reservation 		  = _reservation;
 		this.discountInPercentage = _discountInPercentage;
-		this.netTotalAmount = this.calculateNetAmount(_reservation, _discountInPercentage);
-		this.tax = this.fixDecimal(this.netTotalAmount * this.HST);
-		this.totalAmount = this.calculateTotalAmount(this.netTotalAmount);
+		this.netTotalAmount 	  = this.calculateNetAmount(_reservation, _discountInPercentage);
+		this.tax 				  = this.fixDecimal(this.netTotalAmount * this.HST);
+		this.totalAmount 		  = this.calculateTotalAmount(this.netTotalAmount);
 	}
 	
 	public Receipt(int _id, Reservation _reservation, double _discountInPercentage) {
-		this.id = _id;
-		this.reservation = _reservation;
+		this.id 				  = _id;
+		this.reservation 		  = _reservation;
 		this.discountInPercentage = _discountInPercentage;
-		this.netTotalAmount = this.calculateNetAmount(_reservation, _discountInPercentage);
-		this.tax = this.fixDecimal(this.netTotalAmount * this.HST);
-		this.totalAmount = this.calculateTotalAmount(this.netTotalAmount);
+		this.netTotalAmount 	  = this.calculateNetAmount(_reservation, _discountInPercentage);
+		this.tax 				  = this.fixDecimal(this.netTotalAmount * this.HST);
+		this.totalAmount 		  = this.calculateTotalAmount(this.netTotalAmount);
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	public void setId(int _id) {
@@ -44,9 +51,21 @@ public class Receipt {
 		return this.tax;
 	}
 	
+	public double getAmount() {
+		return this.totalAmount;
+	}
+	
+	public double getDiscount() {
+		return this.discountInPercentage;
+	}
+	
+	public double getNetTotal() {
+		return this.netTotalAmount;
+	}
+	
 	private double calculateNetAmount(Reservation _reservation, double _discountInPercentage) {
 		
-		Node _room = _reservation.getRoomDetails().getHead();
+		Node _room 					= _reservation.getRoomDetails().getHead();
 		double totalRoomPricePerDay = 0;
 		
 		while(_room != null) {
@@ -66,22 +85,6 @@ public class Receipt {
 	
 	private double fixDecimal(double amount) {
 		return Double.parseDouble(String.format("%.2f", amount));
-	}
-	
-	public int getId() {
-		return this.id;
-	}
-	
-	public double getAmount() {
-		return this.totalAmount;
-	}
-	
-	public double getDiscount() {
-		return this.discountInPercentage;
-	}
-	
-	public double getNetTotal() {
-		return this.netTotalAmount;
 	}
 	
 }

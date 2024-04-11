@@ -11,70 +11,12 @@ import Database.HotelReservationDB;
 import Model.*;
 
 public class ReservationManager {
-
-	//private static ArrayList<RoomController> singleRooms 	= new ArrayList<>(),
-    //			   			 		  	     doubleRooms 	= new ArrayList<>(),
-    	//		   			 		  	     deluxRooms 	= new ArrayList<>(),
-    		//	   			 		  	     pentHouseRooms = new ArrayList<>();
-	//private static ArrayList<ReservationController> allReservation = new ArrayList<>();
-	//private static ArrayList<ReceiptController> allReceipts = new ArrayList<>();
 	
 	public ReservationManager()  {
 		
 		DBController.createTables();
 		
 	}
-	
-	/*private void LoadRoomData() {
-		
-		int totalSingleRooms = RoomDescription.SingleRooms;
-		
-		while(totalSingleRooms > 0) {
-			// (int maxGuestsAllowed, double costPerDay, String roomType, int booked)
-			HotelReservationDB.loadRoomData(getPentHouseRoomsAvailable(), getDoubleRoomsAvailable(), null, getDeluxRoomsAvailable());			
-		}
-		
-
-		this.addRoomsIntoGroup(ReservationManager.singleRooms, 
-							   RoomDescription.SingleRooms,
-							   RoomDescription.PrefixSingleRoomId,
-							   RoomDescription.MaxGuestAllowedSingleRoom,
-							   RoomDescription.SingleRoomCostPerDay, 
-							   RoomType.SINGLE);
-		
-		this.addRoomsIntoGroup(ReservationManager.doubleRooms,
-							   RoomDescription.DoubleRooms, 
-							   RoomDescription.PrefixDoubleRoomId, 
-							   RoomDescription.MaxGuestAllowedDoubleRoom,
-							   RoomDescription.DoubleRoomCostPerDay, 
-							   RoomType.DOUBLE);
-		
-		this.addRoomsIntoGroup(ReservationManager.deluxRooms, 
-							   RoomDescription.DeluxRooms, 
-							   RoomDescription.PrefixDeluxRoomId, 
-							   RoomDescription.MaxGuestAllowedDeluxRoom, 
-							   RoomDescription.DeluxRoomCostPerDay, 
-							   RoomType.DELUX);
-		
-		this.addRoomsIntoGroup(ReservationManager.pentHouseRooms, 
-							   RoomDescription.PentHouses, 
-							   RoomDescription.PrefixPentHouseId, 
-							   RoomDescription.MaxGuestAllowedPentHouse, 
-							   RoomDescription.PentHouseCostPerDay, 
-							   RoomType.PENTHOUSE);
-		
-	}
-	
-	private void addRoomsIntoGroup(ArrayList<RoomController> roomGroup, int totalRoomsAvailable, 
-								   String roomIdPrefix, int maxGuestAllowed, 
-								   double roomPrice, RoomDescription.RoomType roomType) {
-		
-		for(int i = 0; i < totalRoomsAvailable; i++) {
-			RoomController room = 
-					new RoomController(roomIdPrefix + i + 1, maxGuestAllowed, roomPrice, roomType);
-			roomGroup.add(room);
-		}
-	}*/
 	
 	public static int roomsAvailable(RoomType roomType) {
 
@@ -95,9 +37,8 @@ public class ReservationManager {
 								  		 RoomLinkedList roomsSelected) {
 
 		ArrayList<Room> allAvailableRooms = DBController.getAllAvailableRooms();
-		ArrayList<Room> roomsReserved = new ArrayList<>();
-
-		RoomLinkedList.Node firstRoom = roomsSelected.getHead();
+		ArrayList<Room> roomsReserved 	  = new ArrayList<>();
+		RoomLinkedList.Node firstRoom     = roomsSelected.getHead();
 		
 		while(firstRoom != null) {
 			
@@ -115,10 +56,10 @@ public class ReservationManager {
 			
 		}
 		
-		Customer customer = new Customer(firstName, lastName, address, email, phone, totalGuests);
+		Customer customer       = new Customer(firstName, lastName, address, email, phone, totalGuests);
 		Reservation reservation = new Reservation(customer, roomsReserved, checkIn, checkOut, true);
 		
-		int reservationId = DBController.addReservation(reservation);
+		int reservationId 		= DBController.addReservation(reservation);
 		
 		reservation.setId(reservationId);
 		

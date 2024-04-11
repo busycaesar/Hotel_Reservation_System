@@ -13,15 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
-	
-	
-	
+
 	@Override
 	public void start(Stage primaryStage) {
-					
-			//HotelReservationDB.setConnection(connection);
 			
 		try {
+			
 			// Create a BorderPane and load the fxml file.
 			BorderPane root;
 				root = (BorderPane)FXMLLoader.load(getClass().getResource("welcome.fxml"));
@@ -38,6 +35,7 @@ public class Main extends Application {
 			
 			// Display the stage.
 			primaryStage.show();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
