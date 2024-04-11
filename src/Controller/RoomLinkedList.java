@@ -1,6 +1,6 @@
 package Controller;
 
-import Controller.RoomDescription.RoomType;
+import Model.Room.RoomType;;
 
 public class RoomLinkedList {
 	

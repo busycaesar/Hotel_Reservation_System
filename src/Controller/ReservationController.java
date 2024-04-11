@@ -8,21 +8,10 @@ import Model.*;
 public class ReservationController {
 
 	private Reservation reservation;
-	private boolean valid;
-	  
-	public ReservationController(int id, String firstName, String lastName, String address, String email, 
-								 String phone, int totalGuests, Date checkIn, Date checkOut, 
-								 ArrayList<RoomController> roomsReserved) {
+	
+	public ReservationController(Reservation _reservation) {
 		
-		ArrayList<Room> _roomsReserved = new ArrayList<>();
-		
-		for(RoomController room: roomsReserved) {
-			_roomsReserved.add(room.getRoom());
-		}
- 		
-		Customer customer = new Customer(firstName, lastName, address, email, phone, totalGuests);
-		this.reservation  = new Reservation(id, customer, _roomsReserved, checkIn, checkOut);
-		this.valid = true;
+		this.reservation  = _reservation;
 		
 	}
 	
@@ -58,21 +47,33 @@ public class ReservationController {
 		return this.reservation.getCustomerContactDetails();
 	}
 	
+	public int getCustomerId() {
+		return this.reservation.getCustomerId();
+	}
+	
 	@Override
 	public String toString() {
-	    return "Customer Name: " + this.getCustomerName() 
-	    + "\nCheck In: " + this.getCheckIn() 
-	    + "\nCheck Out: " + this.getCheckOut()
-	    + "\nRoom Details:\n" + this.getRoomDetails()
-	    + "Contact Details:\n" + this.getCustomerContactDetails();
+	    String information = "Reservation Id: "   + this.getId()
+	    	 			   + "\nCustomer Name: "  + this.getCustomerName() 
+	    	 			   + "\nCheck In: " 	  + this.getCheckIn() 
+	    	 			   + "\nCheck Out: " 	  + this.getCheckOut()
+	    	 			   + "\nRoom Details:\n"  + this.getRoomDetails()
+	    	 			   + "Contact Details:\n" + this.getCustomerContactDetails();
+	    	 
+	    if(this.isValid()) {
+	    	
+	    	Receipt receipt = new Receipt(0, this.reservation, 0.0);
+	    	
+	    	information += "\nPayment Pending: $" + receipt.getAmount();
+	    	
+	    }
+	    
+	    return information;
+	    
 	}
 	
-	public void setIsValid(boolean _isValid) {
-		this.valid = _isValid;
-	}
-	
-	public boolean isValid() {
-		return this.valid;
+	private boolean isValid() {
+		return this.reservation.isValid();
 	}
 	
 }

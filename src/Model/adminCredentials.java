@@ -2,15 +2,15 @@ package Model;
 
 public class AdminCredentials {
 
-	private String id,
-				   password;
+	private int id;
+	private String password;
 	
-	public AdminCredentials() {
-		this.id = "admin";
-		this.password = "1234";
+	public AdminCredentials(int _id, String _password) {
+		this.id = _id;
+		this.password = _password;
 	}
 	
-	public String getId() { return this.id; }
+	public int getId() { return this.id; }
 	
 	public String getPassword() { return this.password; }
 	

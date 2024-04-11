@@ -1,30 +1,39 @@
 package Controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Controller.RoomDescription.RoomType;
+import Model.Room.RoomType;
 import Controller.RoomLinkedList.Node;
-import Model.Receipt;
-import Model.Reservation;
-import Model.Room;
+import Database.DBController;
+import Database.HotelReservationDB;
+import Model.*;
 
 public class ReservationManager {
 
-	private static ArrayList<RoomController> singleRooms 	= new ArrayList<>(),
-    			   			 		  	     doubleRooms 	= new ArrayList<>(),
-    			   			 		  	     deluxRooms 	= new ArrayList<>(),
-    			   			 		  	     pentHouseRooms = new ArrayList<>();
-	private static ArrayList<ReservationController> allReservation = new ArrayList<>();
-	private static ArrayList<ReceiptController> allReceipts = new ArrayList<>();
+	//private static ArrayList<RoomController> singleRooms 	= new ArrayList<>(),
+    //			   			 		  	     doubleRooms 	= new ArrayList<>(),
+    	//		   			 		  	     deluxRooms 	= new ArrayList<>(),
+    		//	   			 		  	     pentHouseRooms = new ArrayList<>();
+	//private static ArrayList<ReservationController> allReservation = new ArrayList<>();
+	//private static ArrayList<ReceiptController> allReceipts = new ArrayList<>();
 	
-	public ReservationManager() {
+	public ReservationManager()  {
 		
-		this.LoadRoomData();
+		DBController.createTables();
 		
 	}
 	
-	private void LoadRoomData() {
+	/*private void LoadRoomData() {
+		
+		int totalSingleRooms = RoomDescription.SingleRooms;
+		
+		while(totalSingleRooms > 0) {
+			// (int maxGuestsAllowed, double costPerDay, String roomType, int booked)
+			HotelReservationDB.loadRoomData(getPentHouseRoomsAvailable(), getDoubleRoomsAvailable(), null, getDeluxRoomsAvailable());			
+		}
+		
 
 		this.addRoomsIntoGroup(ReservationManager.singleRooms, 
 							   RoomDescription.SingleRooms,
@@ -65,155 +74,155 @@ public class ReservationManager {
 					new RoomController(roomIdPrefix + i + 1, maxGuestAllowed, roomPrice, roomType);
 			roomGroup.add(room);
 		}
-	}
-	
-	private static int countRooms(ArrayList<RoomController> roomGroup) {
-		
-		int _roomsAvailable = 0;
-		
-		for(RoomController room : roomGroup) {
-			if(!room.isBooked()) _roomsAvailable++;
-		}
-
-		return _roomsAvailable;
-		
-	}
+	}*/
 	
 	public static int roomsAvailable(RoomType roomType) {
 
 		if(roomType.equals(RoomType.SINGLE)) 
-			return ReservationManager.countRooms(ReservationManager.singleRooms);
+			return DBController.countRooms(RoomType.SINGLE.toString());
 		else if(roomType.equals(RoomType.DOUBLE)) 
-			return ReservationManager.countRooms(ReservationManager.doubleRooms);
+			return DBController.countRooms(RoomType.DOUBLE.toString());
 		else if(roomType.equals(RoomType.DELUX)) 
-			return ReservationManager.countRooms(ReservationManager.deluxRooms);
+			return DBController.countRooms(RoomType.DELUX.toString());
 		else if(roomType.equals(RoomType.PENTHOUSE)) 
-			return ReservationManager.countRooms(ReservationManager.pentHouseRooms);
+			return DBController.countRooms(RoomType.PENTHOUSE.toString());
 		return 0;
-		
-	}
-	
-	private static void bookRooms(ArrayList<RoomController> roomGroup, 
-								  ArrayList<RoomController> reserveRoom, 
-								  int roomsRequire) {
-		
-		int roomsBooked = 0;
-		
-		for(int i = 0; i < roomGroup.size(); i++) {
-			
-			RoomController room = roomGroup.get(i);
-			
-			if(!room.isBooked() && roomsBooked < roomsRequire) {
-				reserveRoom.add(room);
-				room.setBooked(true);
-				roomsBooked++;
-			}
-			
-		}
 		
 	}
 	
 	public static boolean addReservation(String firstName, String lastName, String address, String email,
 								  		 String phone, int totalGuests, Date checkIn, Date checkOut,
 								  		 RoomLinkedList roomsSelected) {
-		
-		ArrayList<RoomController> roomsReserved = new ArrayList<>();
+
+		ArrayList<Room> allAvailableRooms = DBController.getAllAvailableRooms();
+		ArrayList<Room> roomsReserved = new ArrayList<>();
+
 		RoomLinkedList.Node firstRoom = roomsSelected.getHead();
 		
 		while(firstRoom != null) {
 			
-			if(firstRoom.getType().equals(RoomType.SINGLE))
-				ReservationManager.bookRooms(ReservationManager.singleRooms, roomsReserved, firstRoom.getTotalRooms());
-			else if(firstRoom.getType().equals(RoomType.DOUBLE))
-				ReservationManager.bookRooms(ReservationManager.doubleRooms, roomsReserved, firstRoom.getTotalRooms());
-			if(firstRoom.getType().equals(RoomType.DELUX))
-				ReservationManager.bookRooms(ReservationManager.deluxRooms, roomsReserved, firstRoom.getTotalRooms());
-			if(firstRoom.getType().equals(RoomType.PENTHOUSE))
-				ReservationManager.bookRooms(ReservationManager.pentHouseRooms, roomsReserved, firstRoom.getTotalRooms());
+			int totalRoomsRequire = firstRoom.getTotalRooms();
 			
+			for(Room room: allAvailableRooms) {
+				if(room.getType().equals(firstRoom.getType())) {
+					roomsReserved.add(room);
+					totalRoomsRequire--;
+					if(totalRoomsRequire <= 0) break;
+				}
+			}
+		
 			firstRoom = firstRoom.getNext();
+			
 		}
 		
-		ReservationController reservation 
-		= new ReservationController(ReservationManager.allReservation.size(), firstName, lastName, 
-									address, email, phone, totalGuests, checkIn, checkOut, roomsReserved);
+		Customer customer = new Customer(firstName, lastName, address, email, phone, totalGuests);
+		Reservation reservation = new Reservation(customer, roomsReserved, checkIn, checkOut, true);
 		
-		ReservationManager.allReservation.add(reservation);
+		int reservationId = DBController.addReservation(reservation);
+		
+		reservation.setId(reservationId);
 		
 		return true;
 
 	}
 	
-	public static ArrayList<ReservationController> getAllValidReservation() {
+	public static boolean verifyCredentials(int receivedEmployeeId, String receivedPassword) {
 		
-		ArrayList<ReservationController> allValidReservation = new ArrayList<>();
+		AdminCredentials adminCredentials = DBController.getCredentialsFor(receivedEmployeeId);
 		
-		for (int i = 0; i < ReservationManager.allReservation.size(); i++) {
-			ReservationController reservation = ReservationManager.allReservation.get(i);
-			System.out.println(reservation.getId());
-			if(reservation.isValid()) allValidReservation.add(reservation);
+		return adminCredentials.getPassword().equals(receivedPassword);
+		
+	}
+	
+	private static ArrayList<ReservationController> toReservationController(ArrayList<Reservation> reservations){
+		
+		ArrayList<ReservationController> _reservation = new ArrayList<>();
+		
+		for (int i = 0; i < reservations.size(); i++) {
+			
+			ReservationController reservation = new ReservationController(reservations.get(i));
+			_reservation.add(reservation);
+			
 		}
 		
-		return allValidReservation;
+		return _reservation;
+		
+	}
+	
+	private static ArrayList<CustomerController> toCustomerController(ArrayList<Customer> customers){
+		
+		ArrayList<CustomerController> _customers = new ArrayList<>();
+		
+		for (int i = 0; i < customers.size(); i++) {
+			
+			CustomerController customer = new CustomerController(customers.get(i));
+			_customers.add(customer);
+			
+		}
+		
+		return _customers;
+		
+	}
+	
+	public static ArrayList<ReservationController> getAllValidReservation() {
+		
+		ArrayList<Reservation> allValidReservation = DBController.getReservations(true);
+
+		return ReservationManager.toReservationController(allValidReservation);
+		
 	}
 	
 	public static ArrayList<ReservationController> getAllReservation() {
 		
-		return ReservationManager.allReservation;
+		ArrayList<Reservation> allReservations = DBController.getReservations(false);
+		
+		return ReservationManager.toReservationController(allReservations);
 		
 	}
 	
-	public static ReceiptController generateBill(ReservationController reservation) {
+	public static ReceiptController generateBill(ReservationController reservation, double discount) {
 		
-		ArrayList<Room> reservedRooms = reservation.getReservedRoom();
+		Receipt receipt = new Receipt(reservation.getReservation(), discount);
 		
-		for(int i = 0; i < reservedRooms.size(); i++) {
-			reservedRooms.get(i).setBooked(false);
-		}
+		int receiptId = DBController.addReceipt(receipt);
+
+		receipt.setId(receiptId);
 		
-		for(int i = 0; i < ReservationManager.allReservation.size(); i++) {
-			ReservationController _reservation = ReservationManager.allReservation.get(i);
-			
-			if(_reservation.getId() == reservation.getId()) {
-				_reservation.setIsValid(false);
-				break;
-			}
-			
-		}
-		
-		ReceiptController receipt = new ReceiptController(ReservationManager.allReceipts.size(), 
-														  reservation.getReservation(), 0.0);
-		
-		ReservationManager.allReceipts.add(receipt);
-		
-		return receipt;
+		return new ReceiptController(receipt);
 		
 	}
+	
+	public static ArrayList<Double> getDiscountOptions(){
+		
+		return DBController.getDiscountOptions();
+		
+	}
+	
 	
 	public static int getSingleRoomsAvailable() {
-		return ReservationManager.countRooms(ReservationManager.singleRooms);
+		return DBController.countRooms(RoomType.SINGLE.toString());
 	}
 	
 	public static int getDoubleRoomsAvailable() {
-		return ReservationManager.countRooms(ReservationManager.doubleRooms);
+		return DBController.countRooms(RoomType.DOUBLE.toString());
 	}
 
 	public static int getDeluxRoomsAvailable() {
-		return ReservationManager.countRooms(ReservationManager.deluxRooms);
+		return DBController.countRooms(RoomType.DELUX.toString());
 	}
 
 	public static int getPentHouseRoomsAvailable() {
-		return ReservationManager.countRooms(ReservationManager.pentHouseRooms);
+		return DBController.countRooms(RoomType.PENTHOUSE.toString());
 	}
 	
 	public static ArrayList<Node> getRoomsAvailable() {
 		
 		ArrayList<Node> roomsAvailable = new ArrayList<>();
 		
-		int singleRoomsAvailable = ReservationManager.getSingleRoomsAvailable(),
-			doubleRoomsAvailable = ReservationManager.getDoubleRoomsAvailable(),
-			deluxRoomsAvailable = ReservationManager.getDeluxRoomsAvailable(),
-			pentHouseRoomsAvailable = ReservationManager.getPentHouseRoomsAvailable();
+		int singleRoomsAvailable = DBController.countRooms(RoomType.SINGLE.toString()),
+			doubleRoomsAvailable = DBController.countRooms(RoomType.DOUBLE.toString()),
+			deluxRoomsAvailable = DBController.countRooms(RoomType.DELUX.toString()),
+			pentHouseRoomsAvailable = DBController.countRooms(RoomType.PENTHOUSE.toString());
 		
 		if (singleRoomsAvailable > 0) {
 			Node roomNode = new Node(RoomType.SINGLE, singleRoomsAvailable);
@@ -239,104 +248,16 @@ public class ReservationManager {
 		
 	}
 	
-	/*
-	private RoomController [] temp(int totalGuests, ArrayList<RoomController> teemp) {
-		RoomController [] some = null;
-		int roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDeluxRoom),
-				roomsAvailable = 0;
+	public static ArrayList<CustomerController> getAllCustomers() {
 		
-		for(RoomController room: teemp) {
-			if(!room.booked) roomsAvailable++;
-		}
+		return ReservationManager.toCustomerController(DBController.getAllCustomers());
 
-		if(roomsAvailable >= roomsRequire) {
-			some = new RoomController[roomsRequire];
-			for(int i = 0; i < roomsRequire; i++) {
-				some[i] = teemp.get(i);
-			}
-			return some;
-		}
-		return some;
 	}
 	
-	public ArrayList<RoomController []> getRoomsFor(int totalGuests) {
-
-		int roomsRequire = 0, roomsAvailable = 0;
-		ArrayList<RoomController []> roomsSuggestions = new ArrayList<>();
+	public static ReservationController getCustomerReservation(CustomerController customer) {
 		
-		while(totalGuests != 0) {
-			
-			if(totalGuests >= RoomDescription.MaxGuestAllowedPentHouse) {
-				
-				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedPentHouse);
-				
-				for(RoomController room: this.pentHouseRooms) {
-					if(!room.booked) roomsAvailable++;					
-				}
-				
-				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= RoomDescription.MaxGuestAllowedPentHouse;
-					RoomController[] rooms = new RoomController[roomsRequire];
-					for(int i = 0; i < roomsRequire; i++) {
-						rooms[i] = this.pentHouseRooms.get(i);
-					}
-					roomsSuggestions.add(rooms);
-				}
-			}
-			else if(totalGuests >= RoomDescription.MaxGuestAllowedDeluxRoom) {
-				
-				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDeluxRoom);
-				
-				for(RoomController room: this.deluxRooms) {
-					if(!room.booked) roomsAvailable++;
-				}
-
-				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= RoomDescription.MaxGuestAllowedDeluxRoom;
-					RoomController[] rooms = new RoomController[roomsRequire];
-					for(int i = 0; i < roomsRequire; i++) {
-						rooms[i] = this.deluxRooms.get(i);
-					}
-					roomsSuggestions.add(rooms);
-				}
-			}
-			else if(totalGuests >= RoomDescription.MaxGuestAllowedDoubleRoom) {
-				roomsRequire = Math.round(totalGuests / RoomDescription.MaxGuestAllowedDoubleRoom);
-
-				for(RoomController room: this.doubleRooms) {
-					if(!room.booked) roomsAvailable++;
-				}
-				
-				if(roomsAvailable >= roomsRequire) {
-					totalGuests -= RoomDescription.MaxGuestAllowedDoubleRoom;
-					RoomController[] rooms = new RoomController[roomsRequire];
-					for(int i = 0; i < roomsRequire; i++) {
-						rooms[i] = this.doubleRooms.get(i);
-					}
-					roomsSuggestions.add(rooms);
-				}
-			}
-			else{
-				roomsRequire = totalGuests;
-
-				for(RoomController room: this.singleRooms) {
-					if(!room.booked) roomsAvailable++;
-				}
-				
-				if(roomsAvailable >= roomsRequire) {
-					totalGuests = 0;
-					RoomController[] rooms = new RoomController[roomsRequire];
-					for(int i = 0; i < roomsRequire; i++) {
-						rooms[i] = this.singleRooms.get(i);
-					}
-					roomsSuggestions.add(rooms);
-			}
-			}
-			
-		}
+		return new ReservationController(DBController.getReservationOfCustomer(customer.getId()));
 		
-		return roomsSuggestions;
-		
-	}*/
+	}
 	
 }

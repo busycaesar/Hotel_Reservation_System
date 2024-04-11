@@ -1,6 +1,6 @@
 package View;
 
-import Controller.AuthenticationController;
+import Controller.ReservationManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
@@ -15,15 +15,9 @@ public class LoginFormController {
     private TextField employeeId, password;
     @FXML
     private Text warning;
-    private String adminId, adminPassword;
 
     @FXML
     public void initialize() {
-    	
-    	// Get admin credentials
-    	AuthenticationController authController = new AuthenticationController();
-        this.adminId = authController.getAdminId();
-        this.adminPassword = authController.getAdminPassword();
         
         // Set defaults
         this.setDefaults();
@@ -55,9 +49,17 @@ public class LoginFormController {
         	// Get the credentials entered by the user.
         	String _receivedEmployeeId = this.employeeId.getText(),
         			_receivedPassword = this.password.getText();
+        	int employeeId = 0;
+        	
+        	try {
+        		employeeId = Integer.parseInt(_receivedEmployeeId);        		
+        	}catch (NumberFormatException e){
+        		this.warning.setText("Admin id must be a number");
+        		return;
+        	}
         	
         	// Make sure credentials are correct.
-        	if (!_receivedEmployeeId.equals(this.adminId) || !_receivedPassword.equals(this.adminPassword)) {
+        	if (ReservationManager.verifyCredentials(employeeId, _receivedPassword)) {
         		
         		System.out.println(_receivedEmployeeId + ", tried logging into the system with wrong credentials!");
         		
@@ -69,7 +71,7 @@ public class LoginFormController {
         		return;
         	}
 
-        	System.out.println("Login Successful by " + this.adminId);
+        	System.out.println("Login Successful by " + _receivedEmployeeId);
         	
             _FXMLUtil.setScreen(root, "AdminPanel.fxml");
         

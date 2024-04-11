@@ -3,12 +3,10 @@ package View;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import Controller.ReceiptController;
-import Controller.ReservationController;
-import Controller.ReservationManager;
-import Controller.RoomLinkedList;
+import Controller.*;
 import Controller.RoomLinkedList.Node;
 import UtilityFunction.DialogBox;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
@@ -22,6 +20,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -51,17 +50,22 @@ public class AdminPanelController {
        	_FXMLUtil.setScreen(root, "BookRoom.fxml");
     }
     
-    private void generateBill(ReservationController reservation) {
+    private void generateBill(ReservationController reservation, double discount) {
     	
+     	ReceiptController receipt = ReservationManager.generateBill(reservation, discount);
+     	
+     	DialogBox.information("Final Receipt", receipt.toString());
     	
-     	ReceiptController receipt = ReservationManager.generateBill(reservation);
-     	
-     	String totalBill = "Total Bill:"
-     			+ "\nNet Amount: $" + receipt.getNetTotalAfterDiscount()
-     			+ "\nTotal Amount: $" + receipt.getTotalAmount();
-     	
-     	DialogBox.information("Final Receipt", totalBill);
-     	
+    }
+    
+    private void promptForDiscount(ReservationController reservation) {
+    	
+    	ArrayList<Double> discountOptions = ReservationManager.getDiscountOptions();
+    	
+    	Double selectedAmount = DialogBox.choiceBoxView(discountOptions, "Discount Options", "Please select discount(if require)", "Generate Bill");
+    	     	
+    	this.generateBill(reservation, selectedAmount);
+    	
     }
     
     @FXML
@@ -75,10 +79,10 @@ public class AdminPanelController {
     		return;
     	}
     	
-    	DialogBox.listView(allReservation, "Current Reservation", "Generate Bill", 
-    			(ReservationController reservation) -> generateBill(reservation)
-    	);
+    	ReservationController reservationSelected = DialogBox.listView(allReservation,"Current Reservation", "Generate Bill");
 
+    	this.promptForDiscount(reservationSelected);
+    	
     }
     
     @FXML
@@ -98,21 +102,49 @@ public class AdminPanelController {
     
     @FXML
     private void handleExitButtonClick() {
-        _FXMLUtil.setScreen(root, "Welcome.fxml");
+		Platform.exit();
+		System.exit(0);
     }
     
     @FXML
-    private void handleBillServiceButtonClick() {
+    private void handleAllBookingsButtonClick() {
     	
     	ArrayList<ReservationController> allReservation = ReservationManager.getAllReservation();
     	
     	if(allReservation.size() <= 0) {
     		this.warning.setFill(Color.RED);
-    		this.warning.setText("No current reservation.");
+    		this.warning.setText("No dooking data.");
     		return;
     	}
     	
-    	DialogBox.listView(allReservation, "Current Reservation");
+    	DialogBox.listView(allReservation, "All Reservations");
+    	
+    }
+    
+    private void showReservationInformation(CustomerController customer) {
+    	
+     	ReservationController reservation = ReservationManager.getCustomerReservation(customer);
+     	
+     	String customerReservationInformation = "Customer Reservation Information:\n" + reservation.toString();
+     	
+     	DialogBox.information("Reservation Information", customerReservationInformation);
+    	
+    }
+    
+    @FXML
+    private void handleAllCustomersButtonClick() {
+    	
+    	ArrayList<CustomerController> allCustomers = ReservationManager.getAllCustomers();
+    	
+    	if(allCustomers.size() <= 0) {
+    		this.warning.setFill(Color.RED);
+    		this.warning.setText("No customer data.");
+    		return;
+    	}
+    	
+    	CustomerController customer = DialogBox.listView(allCustomers, "All Customers", "Check Reservation");
+    	
+    	if(customer != null) this.showReservationInformation(customer);
     	
     }
 	

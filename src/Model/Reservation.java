@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import Controller.RoomDescription.RoomType;
+import Model.Room.RoomType;
 import Controller.RoomLinkedList;
 import Controller.RoomLinkedList.Node;
+import Database.DBController;
 
 public class Reservation {
 
@@ -18,13 +19,29 @@ public class Reservation {
 	// Store the check in and check out date.
 	private Date 	 checkIn,
 					 checkOut;
+	private boolean valid;
 	
-	public Reservation(int _id, Customer _customer, ArrayList<Room> _roomsReserved, Date _checkIn, Date _checkOut) {
+	public Reservation(Customer _customer, ArrayList<Room> _roomsReserved,
+		   	   Date _checkIn, Date _checkOut, boolean _valid) {
+		this.customer = _customer;
+		this.roomsReserved = _roomsReserved;
+		this.checkIn  = _checkIn;
+		this.checkOut = _checkOut;
+		this.valid = _valid;
+	}
+	
+	public Reservation(int _id, Customer _customer, ArrayList<Room> _roomsReserved,
+				   	   Date _checkIn, Date _checkOut, boolean _valid) {
 		this.id = _id;
 		this.customer = _customer;
 		this.roomsReserved = _roomsReserved;
 		this.checkIn  = _checkIn;
 		this.checkOut = _checkOut;
+		this.valid = _valid;
+	}
+	
+	public void setId(int _id) {
+		this.id = _id;
 	}
 	
 	// https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeUnit.html
@@ -43,7 +60,27 @@ public class Reservation {
 	}
 	
 	public String getCustomerName() {
-		return this.customer.getName();
+		return this.getCustomerFirstName() + " " + this.getCustomerLastName();
+	}
+	
+	public String getCustomerFirstName() {
+		return this.customer.getFirstName();
+	}
+	
+	public String getCustomerLastName() {
+		return this.customer.getLastName();
+	}
+	
+	public String getCustomerEmail() {
+		return this.customer.getEmail();
+	}
+	
+	public String getCustomerPhoneNumber() {
+		return this.customer.getPhone();
+	}
+	
+	public String getCustomerAddress() {
+		return this.customer.getAddress();
 	}
 	
 	public String getCustomerContactDetails() {
@@ -58,6 +95,14 @@ public class Reservation {
 		return this.checkOut;
 	}
 	
+	public int getCustomerId() {
+		return this.customer.getId();
+	}
+	
+	public int getTotalGuests() {
+		return this.customer.getTotalGuests();
+	}
+	
 	@Override
 	public String toString() {
 		
@@ -66,14 +111,8 @@ public class Reservation {
 		
 		while(_room != null) {
 			
-			if(_room.getType() == RoomType.SINGLE)
-				roomDetails += _room.getTotalRooms() + " Single Rooms\n";
-			if(_room.getType() == RoomType.DOUBLE)
-				roomDetails += _room.getTotalRooms() + " Double Rooms\n";
-			if(_room.getType() == RoomType.DELUX)
-				roomDetails += _room.getTotalRooms() + " Delux Rooms\n";
-			if(_room.getType() == RoomType.PENTHOUSE)
-				roomDetails += _room.getTotalRooms() + " Pent Houses\n";
+			roomDetails += _room.getTotalRooms() + " " 
+			+ _room.getType().toString().toLowerCase() + " Rooms\n";
 			
 			_room = _room.getNext();
 		}
@@ -111,6 +150,10 @@ public class Reservation {
 	
 	public ArrayList<Room> getReservedRoom(){
 		return this.roomsReserved;
+	}
+	
+	public boolean isValid() {
+		return this.valid;
 	}
 	
 }

@@ -3,9 +3,9 @@ package View;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import Controller.RoomDescription;
-import Controller.RoomDescription.RoomType;
+import Model.Room.RoomType;
 import Controller.RoomLinkedList;
+import Database.DBController;
 import Controller.ReservationManager;
 import UtilityFunction.DialogBox;
 import javafx.fxml.FXML;
@@ -30,6 +30,7 @@ public class BookRoomController {
     private TextField firstName, lastName, address, email, phone;
     @FXML
     private Text requireFieldWarning, warning;
+    private final int MaxGuestPerReservation = 10;
     
     @FXML
     public void initialize() {
@@ -41,7 +42,7 @@ public class BookRoomController {
     
     private void loadData() {
     	
-    	for(int i = 0; i < RoomDescription.maxGuestPerReservation; i++) {
+    	for(int i = 0; i < MaxGuestPerReservation; i++) {
     		this.totalGuests.getItems().add(i + 1);    		
     	}
     	
@@ -143,22 +144,22 @@ public class BookRoomController {
 		int guestsAccomodated = 0;
 		
 		if(this.singleRooms.getValue() != null) {
-			guestsAccomodated += (RoomDescription.MaxGuestAllowedSingleRoom * this.singleRooms.getValue());
+			guestsAccomodated += (DBController.getMaxGuestsAllowedForType(RoomType.SINGLE) * this.singleRooms.getValue());
 			roomsSelected.add(RoomType.SINGLE, this.singleRooms.getValue());
 		}
 		
 		if(this.doubleRooms.getValue() != null) {
-			guestsAccomodated += (RoomDescription.MaxGuestAllowedDoubleRoom * this.doubleRooms.getValue());
+			guestsAccomodated += (DBController.getMaxGuestsAllowedForType(RoomType.DOUBLE) * this.doubleRooms.getValue());
 			roomsSelected.add(RoomType.DOUBLE, this.doubleRooms.getValue());
 		}
 		
 		if(this.deluxRooms.getValue() != null) {
-			guestsAccomodated += (RoomDescription.MaxGuestAllowedDeluxRoom * this.deluxRooms.getValue());
+			guestsAccomodated += (DBController.getMaxGuestsAllowedForType(RoomType.DELUX) * this.deluxRooms.getValue());
 			roomsSelected.add(RoomType.DELUX, this.deluxRooms.getValue());
 		}
 		
 		if(this.pentHouseRooms.getValue() != null) {
-			guestsAccomodated += (RoomDescription.MaxGuestAllowedPentHouse * this.pentHouseRooms.getValue());
+			guestsAccomodated += (DBController.getMaxGuestsAllowedForType(RoomType.PENTHOUSE) * this.pentHouseRooms.getValue());
 			roomsSelected.add(RoomType.PENTHOUSE, this.pentHouseRooms.getValue());
 		}
 		
@@ -216,8 +217,6 @@ public class BookRoomController {
 			this.warning.setText("Internal Server Error");
 			return;
 		}
-		
-		System.out.println(BookRoomController.isAdmin);
 		
 		if(BookRoomController.isAdmin) _FXMLUtil.setScreen(root, "AdminPanel.fxml");
 		else _FXMLUtil.setScreen(root, "Welcome.fxml");
