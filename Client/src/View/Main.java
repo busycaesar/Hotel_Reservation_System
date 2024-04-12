@@ -1,6 +1,9 @@
 package View;
 	
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,6 +12,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
+	
+	private Socket socket;
+	
+	private DataOutputStream dout;
+	private DataInputStream din;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -31,6 +39,15 @@ public class Main extends Application {
 			
 			// Display the stage.
 			primaryStage.show();
+			
+			try {
+				socket = new Socket("localhost",8000);
+				din=new DataInputStream(socket.getInputStream());
+				
+				dout = new DataOutputStream(socket.getOutputStream());
+				
+			//	new Thread(()->run()).start();
+			}catch(IOException ex) {ex.printStackTrace();}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
