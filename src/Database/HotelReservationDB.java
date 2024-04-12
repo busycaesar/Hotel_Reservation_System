@@ -31,7 +31,131 @@ public class HotelReservationDB {
 		
 	}
 	
+	private static boolean isInitDataAvailable() {
+		
+		String tableExistQuery = "SELECT name "
+							   + "FROM sqlite_master "
+							   + "WHERE type='table' "
+							   + "AND name='Rooms';";
+		
+        try (Connection connection = HotelReservationDB.connect();
+             Statement statement   = connection.createStatement();
+             ResultSet result 	   = statement.executeQuery(tableExistQuery)) {
+
+        	return result.next();
+
+           } catch (SQLException e) {
+               System.out.println(e.getMessage());
+           }
+        
+        return false;
+		
+	}
+	
+	private static void initData() {
+		
+		try(Connection connection = HotelReservationDB.connect()){
+			
+			// Drop all the tables.
+			String dropTablesQuery = "DROP TABLE IF EXISTS RoomsReserved;\n" +
+			        				 "DROP TABLE IF EXISTS Receipts;\n" +
+			        				 "DROP TABLE IF EXISTS Reservations;\n" +
+			        				 "DROP TABLE IF EXISTS Customers;\n" +
+			        				 "DROP TABLE IF EXISTS AdminCredentials;\n" +
+			        				 "DROP TABLE IF EXISTS DiscountOptions;\n" +
+			        				 "DROP TABLE IF EXISTS RoomsDescription;\n" +
+			        				 "DROP TABLE IF EXISTS Rooms;";
+
+			// Create all require tables.
+			String createRoomDescriptionTableQuery = "CREATE TABLE IF NOT EXISTS RoomDescription (" +
+													 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+													 "roomType STRING NOT NULL," +
+													 "totalRooms INTEGER NOT NULL," +
+													 "maxGuestsAllowed INTEGER NOT NULL," +
+													 "costPerDay DOUBLE NOT NULL);";
+
+			String createRoomsTableQuery = "CREATE TABLE IF NOT EXISTS Rooms (" +
+										   "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+										   "roomType STRING NOT NULL," +
+										   "booked INTEGER NOT NULL);";
+
+			String createAdminCredentialsTableQuery = "CREATE TABLE IF NOT EXISTS AdminCredentials (" +
+													  "id INTEGER PRIMARY KEY," +
+													  "password TEXT NOT NULL);";
+
+			String createDiscountOptionsTableQuery = "CREATE TABLE IF NOT EXISTS DiscountOptions (" +
+													 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+													 "discountOption DOUBLE NOT NULL);";
+
+			// Load all require data.
+			String insertRoomsDataQuery = "INSERT INTO ROOMS (roomType, booked) VALUES " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('SINGLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DOUBLE', 0), " +
+										  "('DELUX', 0), " +
+										  "('DELUX', 0), " +
+										  "('DELUX', 0), " +
+										  "('DELUX', 0), " +
+										  "('DELUX', 0), " +
+										  "('DELUX', 0), " +
+										  "('DELUX', 0), " +
+										  "('PENTHOUSE', 0), " +
+										  "('PENTHOUSE', 0), " +
+										  "('PENTHOUSE', 0), " +
+										  "('PENTHOUSE', 0), " +
+										  "('PENTHOUSE', 0);";
+
+			String insertRoomDescriptionDataQuery = "INSERT INTO ROOMDESCRIPTION (roomType, totalRooms, maxGuestsAllowed, costPerDay) VALUES " +
+													"('SINGLE', 10, 1, 30), " +
+													"('DOUBLE', 8, 2, 50), " +
+													"('DELUX', 7, 4, 120), " +
+													"('PENTHOUSE', 5, 6, 250);";
+
+			String insertDiscountOptionsDataQuery = "INSERT INTO DISCOUNTOPTIONS (discountOption) VALUES " +
+													"(0.0), " +
+													"(5.0), " +
+													"(7.0), " +
+													"(13.0), " +
+													"(15.0);";
+
+			String insertAdminCredentialsDataQuery = "INSERT INTO ADMINCREDENTIALS (id, password) VALUES " +
+													 "(11, '1234'), " +
+													 "(12, '1234');";
+			
+			connection.createStatement().executeUpdate(dropTablesQuery);
+			connection.createStatement().executeUpdate(createRoomDescriptionTableQuery);
+			connection.createStatement().executeUpdate(createRoomsTableQuery);
+			connection.createStatement().executeUpdate(createAdminCredentialsTableQuery);
+			connection.createStatement().executeUpdate(createDiscountOptionsTableQuery);
+			connection.createStatement().executeUpdate(insertRoomsDataQuery);
+			connection.createStatement().executeUpdate(insertRoomDescriptionDataQuery);
+			connection.createStatement().executeUpdate(insertDiscountOptionsDataQuery);
+			connection.createStatement().executeUpdate(insertAdminCredentialsDataQuery);
+			
+		}catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		
+	}
+	
 	public static void createTables() {
+		
+		if(!isInitDataAvailable()) initData();
 		
 		try(Connection connection = HotelReservationDB.connect()){
 			
