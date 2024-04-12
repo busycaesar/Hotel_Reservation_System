@@ -11,6 +11,18 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
+/**********************************************
+Project
+Course: APD 545 - 5th Sem
+Last Name: Shah
+First Name: Dev
+ID: 131623217
+Section: NAA
+This assignment represents my own work in accordance with Seneca Academic Policy.
+Signature
+Date: 11th April 2024
+**********************************************/
+
 public class Main extends Application {
 	
 	private Socket socket;
