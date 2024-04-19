@@ -1,4 +1,4 @@
-# Hotel Reservation System (In Development)
+# Hotel Reservation System
 
 ## Description
 
@@ -8,7 +8,7 @@ This is a hotel reservation management system for `Hotel Blue Queen`. Hotel cust
 
 ### Tech Stack
 
-<img src="https://skillicons.dev/icons?i=java" />
+<img src="https://skillicons.dev/icons?i=java,sqlite" />
 
 ### Class Diagram
 
