@@ -12,7 +12,7 @@ This is a hotel reservation management system for **Hotel Blue Queen**. Hotel cu
 
 ### Class Diagram
 
-![Class Diagram](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/6bd02fb9-fb92-4250-8e92-3f1ff3833a18)
+<img src="./ClassDiagram.jpg" alt="Class Diagram" />
 
 ## How it looks
 
