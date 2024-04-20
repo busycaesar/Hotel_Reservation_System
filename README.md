@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a hotel reservation management system for Hotel Blue Queen. Hotel customers can use the system book the room/s before looking at the details about available room types, number of rooms available and its price per day. Furthermore, it has an admin panel through which admins can check the number of available rooms along with its type, all the current booking, generate receipt for any current booking, offer discount while generating the receipt, all the bookings(both current and previous) and all the customers.
+This is a hotel reservation management system for Hotel Blue Queen. Hotel customers can use the system book the room/s before looking at the details about available room types, number of rooms available and its price per day. Furthermore, it has an admin panel through which admins can check the number of available rooms along with its type, all the current booking, generate receipt for any current booking, offer discount while generating the receipt, all the bookings(both current and previous), all the customers and check out any specific customer's reservation.
 
 ## System
 
