@@ -8,7 +8,7 @@ This is a hotel reservation management system for Hotel Blue Queen. Hotel custom
 
 ### Tech Stack
 
-<img src="https://skillicons.dev/icons?i=java,sqlite" />
+<img src="https://skillicons.dev/icons?i=java,sqlite,eclipse" />
 
 ### Class Diagram
 
