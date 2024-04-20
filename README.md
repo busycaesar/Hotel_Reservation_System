@@ -14,7 +14,7 @@ This is a hotel reservation management system for **Hotel Blue Queen**. Hotel cu
 
 <img src="./ClassDiagram.jpg" alt="Class Diagram" />
 
-## How it looks
+## How it looks?
 
 - Landing Page
 
