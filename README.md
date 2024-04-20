@@ -2,55 +2,40 @@
 
 ## Description
 
-This is a hotel reservation management system for **Hotel Blue Queen**. Hotel customers can use the system to fill in the information and based on that, the system can suggest the number of room/s the customer should take. Subsequently the customer can go ahead and book room/s as per the choice. The application also has an admin dashboard which shows all the information, such as how many rooms are book, list of the guest staying in the hotel etc. The admin dashboard has the authority to make/stash any booking.
+This is a hotel reservation management system for Hotel Blue Queen. Hotel customers can use the system book the room/s before looking at the details about available room types, number of rooms available and its price per day. Furthermore, it has an admin panel through which admins can check the number of available rooms along with its type, all the current booking, generate receipt for any current booking, offer discount while generating the receipt, all the bookings(both current and previous), all the customers and check out any specific customer's reservation.
 
 ## System
 
 ### Tech Stack
 
-<img src="https://skillicons.dev/icons?i=java,sqlite" />
+<img src="https://skillicons.dev/icons?i=java,sqlite,eclipse" />
 
 ### Class Diagram
 
 <img src="./ClassDiagram.jpg" alt="Class Diagram" />
 
-## How it looks
+## How it looks?
 
-- Landing Page
-
-![Landing Page](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/3fa83252-3ede-4e3d-bef4-2e25c3e62d58)
-
-- Available Rooms Page
-
-![Available Rooms Page](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/4896a592-d4d2-4eaf-971f-3ed38fd85607)
-
-- Book Room Page
-
-![Book Room Page](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/6f2aa581-19c1-4a20-9701-7498003f88d0)
-
-- Admin Panel
-
-![Admin Panel](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/4899520e-f76e-44fa-a0f6-ffc057732288)
-
-- Current Reservations
-
-![Current Reservations](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/ba2396cc-bfd6-46f2-bca4-d70a38a7c6e6)
-
-- All Reservations
-
-![All Reservations](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/e0e4ec9d-fdd9-4e3b-9b70-c3946f614ec8)
-
-- All Customers
-
-![All Customers](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/908a7b3c-b8ec-4265-a442-e21ec57a1653)
-
-- Reservation of a customer
-
-![Reservation of a customer](https://github.com/busycaesar/Hotel_Reservation_System/assets/97539345/3d8421f5-ced0-4f65-93a3-2f8a11f877f9)
+<a href="https://github.com/busycaesar/Hotel_Reservation_System/blob/Master/ApplicationLooks.md">Application Looks</a>
 
 ## Features
 
-- **Book Room**:
-- **Admin Panel**:
+### Book Room
 
-## How to run the project
+Customer as well as admin can book the room/s using book room page. Security features of the book room page are as follows:
+
+- No fields marked with (*) can be empty.
+- Email and phone should be in a proper format.
+- The minimum check in date is current date and that of check out is check in date plus one.
+- Cannot book rooms which accomodates less guests than the number of guests visiting.
+
+The page shows appropriate error in case of any of the above sitution.
+
+### Admin Panel
+
+The admin panel can only be accessed by the authorized personels. There are two credentails for logging in as an admin. Admin panel has the following options:
+
+- **Available Rooms**: Check the number of available rooms along with the room type.
+- **Current Bookings**: This allows the admin to check the list of all the current booking. Further, admin can 'Generate Receipt' for any of the current booking along with an option to offer some discount.
+- **All Reservations**: Check all the reservations, both current as well as checked out.
+- **All Customers**: Check all the customers, both current as well as checked out. Moreover, there is also an option to check the reservation of a specific customer; in addition to the detail if the customer has already paid or not.
